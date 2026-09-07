@@ -1,0 +1,108 @@
+import type { ComponentType } from "react";
+import { currentUser, room } from "@/data/mock/feed";
+import {
+  BellIcon,
+  HomeIcon,
+  LogoutIcon,
+  PlusIcon,
+  SunIcon,
+  UserIcon,
+  UsersIcon,
+} from "@/components/icons";
+
+export type NavItemKey = "feed" | "children" | "announcements" | "account";
+
+export const NAV_ITEMS: { key: NavItemKey; label: string }[] = [
+  { key: "feed", label: "Feed" },
+  { key: "children", label: "Niños" },
+  { key: "announcements", label: "Avisos" },
+  { key: "account", label: "Mi cuenta" },
+];
+
+const NAV_ICONS: Record<NavItemKey, ComponentType<{ className?: string }>> = {
+  feed: HomeIcon,
+  children: UsersIcon,
+  announcements: BellIcon,
+  account: UserIcon,
+};
+
+export default function Sidebar({
+  activeItem = "feed",
+}: {
+  activeItem?: NavItemKey;
+}) {
+  return (
+    <aside className="sticky top-0 flex h-screen w-[248px] flex-none flex-col border-r border-[#ECE0D0] bg-[#FFFDF9] px-4 py-6">
+      <div className="flex items-center gap-[11px] px-2 pb-[22px] pt-1">
+        <div className="flex h-[38px] w-[38px] flex-none items-center justify-center rounded-xl bg-[linear-gradient(155deg,#F8C3A8,#F2937A)]">
+          <SunIcon className="h-[21px] w-[21px] text-white" />
+        </div>
+        <div>
+          <div className="font-display text-[17px] font-semibold leading-none text-[#3F362E]">
+            OpenDayCare
+          </div>
+          <div className="mt-[2px] text-[11.5px] text-[#A89A8B]">{room.name}</div>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        className="mb-[18px] flex w-full items-center justify-center gap-2 rounded-[14px] bg-[linear-gradient(180deg,#F4977E,#EE8164)] px-3 py-3 text-[14.5px] font-extrabold text-white shadow-[0_8px_18px_-8px_rgba(238,129,100,0.75)]"
+      >
+        <PlusIcon className="h-[17px] w-[17px]" />
+        Nueva publicación
+      </button>
+
+      <nav className="flex flex-1 flex-col gap-1">
+        {NAV_ITEMS.map((item) => {
+          const Icon = NAV_ICONS[item.key];
+          const isActive = item.key === activeItem;
+          return (
+            <a
+              key={item.key}
+              aria-current={isActive ? "page" : undefined}
+              className={`flex items-center gap-3 rounded-xl px-3 py-[11px] text-[14.5px] ${
+                isActive
+                  ? "bg-[#FBE3D8] font-extrabold text-[#D9583C]"
+                  : "font-semibold text-[#6E6359]"
+              }`}
+            >
+              <Icon className="h-[19px] w-[19px] flex-none" />
+              {item.label}
+            </a>
+          );
+        })}
+      </nav>
+
+      <div className="mt-[10px] border-t border-[#ECE0D0] pt-[14px]">
+        <div className="flex items-center gap-[11px] px-2 py-[6px]">
+          <div
+            className="flex h-[38px] w-[38px] flex-none items-center justify-center rounded-full font-display text-[16px] font-semibold"
+            style={{
+              backgroundColor: currentUser.avatarColor,
+              color: currentUser.avatarTextColor,
+            }}
+          >
+            {currentUser.initials}
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="truncate text-[14px] font-extrabold text-[#3F362E]">
+              {currentUser.name}
+            </div>
+            <div className="truncate text-[12px] text-[#A89A8B]">
+              {currentUser.roleLabel}
+            </div>
+          </div>
+          <button
+            type="button"
+            title="Cerrar sesión"
+            aria-label="Cerrar sesión"
+            className="flex h-8 w-8 flex-none items-center justify-center rounded-[10px] bg-[#F6ECDF] text-[#94887B]"
+          >
+            <LogoutIcon className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+    </aside>
+  );
+}
