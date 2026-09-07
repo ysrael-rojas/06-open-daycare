@@ -8,6 +8,37 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
+## Proyecto
+
+- Stack: Next.js 16.3.4 (App Router) + React 19 + TypeScript strict + Tailwind v4. Sin `tailwind.config.*`: el tema se declara en `app/globals.css` con `@theme`. Alias `@/*` → raíz del repo.
+- La app es todavía el scaffold de `create-next-app`. Las pantallas reales (login, feed, niños, avisos…) se construyen replicando los mockups de `references/` en rutas bajo `app/`.
+- UI y código en español (nombres de pantallas, copy "OpenDayCare", tipografías Fredoka/Nunito según los mockups).
+
+## Comandos
+
+- `npm run dev` — servidor de desarrollo.
+- `npm run lint` — ESLint (config flat: `eslint.config.mjs`).
+- No hay test runner configurado. No hay script de typecheck: verificar con `npx tsc --noEmit` o `npm run build`.
+
+## Diseño de referencia
+
+- `references/pantallas/*.dc.html` son mockups estáticos autocontenidos en formato `dc-runtime` (tags `x-dc`/`dc-import`, `support.js` generado): NO son fuentes React ni forman parte del build. Trátalos como read-only: no editar ni copiar su HTML como JSX.
+- `references/screenshots/*.png` son capturas de la UI esperada. Consulta ambos antes de construir una pantalla.
+
 ## MCPs
 
 - Playwright Screenshots y cualquier cosa relacionada a Playwright tienen que estar en la carpeta .playwright-mcp.
+- Context7 usaremos este MCP para traer la documentacion actualizada del framework.
+
+## Flujo de trabajo
+
+- Features grandes: usa la skill `spec` (spec en `specs/NN-slug.md`, en español, no aprobarla automáticamente) y luego `spec-impl` (crea rama `spec-NN-slug`).
+
+## Spec Driven Development - Skills
+
+- /spec Usaremos esta habilidad ára crear especificaciones.
+- /spec-impl Usaremos esta skill para hacer las implementaciones.
+
+## Reglas de código
+
+- Usar codigo limpio, nombres, funciones, variables, etc. en ingles.
