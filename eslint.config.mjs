@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Assets read-only de referencia (mockups dc-runtime generados). No forman parte del build y no deberían lintearse.
+    "references/**",
+    // Artefactos generados por Playwright MCP durante la verificación.
+    ".playwright-mcp/**",
   ]),
 ]);
 

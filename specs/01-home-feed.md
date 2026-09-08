@@ -1,6 +1,6 @@
 # SPEC 01 — Home: feed de la sala (vista maestra)
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Date:** 2026-09-07
 > **Objective:** Implementar la pantalla de feed (vista maestra) como home `/` replicando visualmente `references/pantallas/feed.dc.html`, sin autenticación ni persistencia.
 
@@ -119,14 +119,14 @@ export const todayPosts: Post[] = [
 
 ## Acceptance criteria
 
-- [ ] `npm run lint` y `npx tsc --noEmit` pasan sin errores.
-- [ ] En `/` no queda nada del scaffold (ni Geist, ni textos en inglés, ni assets de create-next-app en uso).
-- [ ] El sidebar mide 248px, es sticky (100vh) con scroll propio en el main, fondo `#FFFDF9` y borde `#ECE0D0`.
-- [ ] Fondo general `#F6ECDF`; textos en Fredoka (títulos/marca) y Nunito (cuerpo); heading "Buenas, Caro" y "GUARDERÍA · SALA SOLES" presentes.
-- [ ] Aparecen las 3 publicaciones con badges "LOGRO" (verde #3E9B6C), "ACTIVIDAD" (azul #2E89A6) y "ANUNCIO" (azul #4E72C8), con sus textos, horas, "Para:", counts de ❤️ y 💬 y enlace "Editar".
-- [ ] La actividad muestra el bloque "Foto · pintando con témperas" (placeholder dashed, altura 200px).
-- [ ] Fila "Compartí un momento…" y botón "Nueva publicación" presentes; ningún enlace navega a ruta inexistente (no 404 al hacer clic).
-- [ ] A 1280×800 la pantalla luce idéntica a `references/screenshots/feed.png` (comparación visual manual).
+- [x] `npm run lint` y `npx tsc --noEmit` pasan sin errores.
+- [x] En `/` no queda nada del scaffold (ni Geist, ni textos en inglés, ni assets de create-next-app en uso).
+- [x] El sidebar mide 248px, es sticky (100vh) con scroll propio en el main, fondo `#FFFDF9` y borde `#ECE0D0`.
+- [x] Fondo general `#F6ECDF`; textos en Fredoka (títulos/marca) y Nunito (cuerpo); heading "Buenas, Caro" y "GUARDERÍA · SALA SOLES" presentes.
+- [x] Aparecen las 3 publicaciones con badges "LOGRO" (verde #3E9B6C), "ACTIVIDAD" (azul #2E89A6) y "ANUNCIO" (azul #4E72C8), con sus textos, horas, "Para:", counts de ❤️ y 💬 y enlace "Editar".
+- [x] La actividad muestra el bloque "Foto · pintando con témperas" (placeholder dashed, altura 200px).
+- [x] Fila "Compartí un momento…" y botón "Nueva publicación" presentes; ningún enlace navega a ruta inexistente (no 404 al hacer clic).
+- [x] A 1280×800 la pantalla luce idéntica a `references/screenshots/feed.png` (comparación visual manual).
 
 ## Decisions
 
