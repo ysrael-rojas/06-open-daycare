@@ -38,6 +38,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - /spec Usaremos esta habilidad para crear especificaciones.
 - /spec-impl Usaremos esta skill para hacer las implementaciones.
+- /verify-spec Usaremos este comando para verificar los criterios de aceptacion de una spec.
 
 ## Spec Driven Development - Agente y comando de verificación
 
