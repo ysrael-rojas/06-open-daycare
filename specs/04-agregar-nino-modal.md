@@ -1,6 +1,6 @@
 # SPEC 04 — Modal "Agregar niño"
 
-> **Status:** Draft
+> **Status:** Aprobado
 > **Depends on:** SPEC 02
 > **Date:** 2026-09-09
 > **Objective:** Agregar a `/kids` un modal "Agregar niño" que se abre al hacer clic en el botón existente, replicando `references/pantallas/agregar-nino.dc.html` como overlay cliente —con máscara de fecha dd/mm/aaaa, 3 salas ficticias y validación visual de los campos obligatorios—, sin persistencia.
