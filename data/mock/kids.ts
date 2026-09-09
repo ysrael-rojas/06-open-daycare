@@ -71,7 +71,7 @@ export interface Kid {
   parents: Parent[];
 }
 
-export const kidsRoom = { name: "Sala Soles" };
+export const kidsRoom = { name: "Sala Soles", shortName: "Soles" };
 
 // --- Derived helpers (Spanish labels from English values) ------------------
 
