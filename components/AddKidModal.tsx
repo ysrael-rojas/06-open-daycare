@@ -28,7 +28,6 @@ function formatDateMask(raw: string): string {
 }
 
 type FormField = keyof typeof INITIAL_FORM;
-type ErrorField = keyof typeof INITIAL_ERRORS;
 
 export default function AddKidModal() {
   const [open, setOpen] = useState(false);

@@ -1,6 +1,7 @@
+import AddKidModal from "@/components/AddKidModal";
 import { KidCard } from "@/components/KidCard";
 import Sidebar from "@/components/Sidebar";
-import { PlusIcon, SearchIcon } from "@/components/icons";
+import { SearchIcon } from "@/components/icons";
 import { kids, kidsRoom } from "@/data/mock/kids";
 
 export default function KidsPage() {
@@ -18,13 +19,7 @@ export default function KidsPage() {
                 Niños
               </h1>
             </div>
-            <button
-              type="button"
-              className="flex items-center gap-2 rounded-[14px] bg-[linear-gradient(180deg,#F4977E,#EE8164)] px-[18px] py-[11px] text-[14.5px] font-extrabold text-white shadow-[0_8px_18px_-8px_rgba(238,129,100,0.7)]"
-            >
-              <PlusIcon className="h-[17px] w-[17px]" />
-              Agregar niño
-            </button>
+            <AddKidModal />
           </div>
 
           <div className="mb-[22px] flex items-center gap-[11px] rounded-[14px] border border-[#ECE0D0] bg-[#FFFDF9] px-4 py-3">
