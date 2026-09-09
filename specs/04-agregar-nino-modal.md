@@ -1,6 +1,6 @@
 # SPEC 04 — Modal "Agregar niño"
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 02
 > **Date:** 2026-09-09
 > **Objective:** Agregar a `/kids` un modal "Agregar niño" que se abre al hacer clic en el botón existente, replicando `references/pantallas/agregar-nino.dc.html` como overlay cliente —con máscara de fecha dd/mm/aaaa, 3 salas ficticias y validación visual de los campos obligatorios—, sin persistencia.
@@ -59,15 +59,15 @@ Sin helpers nuevos: el estado del formulario vive dentro de `AddKidModal` (nombr
 
 ## Acceptance criteria
 
-- [ ] `npm run lint` y `npx tsc --noEmit` pasan sin errores.
-- [ ] En `/kids`, clic en "Agregar niño" abre el modal centrado sobre la pantalla (backdrop translúcido que cubre todo, incluido el sidebar).
-- [ ] El modal replica `agregar-nino.dc.html`: header "Cancelar" (izq, `#94887B`) / "Agregar niño" (Fredoka) / "Guardar" (der, `#D9583C`, weight 800), y los 5 campos con sus labels ("NOMBRE COMPLETO", "FECHA DE NACIMIENTO", "SALA", "ALERGIAS (ETIQUETAS)", "NOTAS MÉDICAS") y placeholders literales.
-- [ ] El campo de fecha solo acepta dígitos y muestra el formato `dd/mm/aaaa` con las barras auto-insertadas.
-- [ ] El selector SALA muestra las opciones "Soles", "Lunas" y "Estrellas", con "Soles" preseleccionada, y un chevron a la derecha.
-- [ ] Al pulsar "Guardar" con nombre vacío, fecha incompleta o sin sala, los campos faltantes quedan con borde rojo y el modal permanece abierto.
-- [ ] Con los 3 obligatorios completos, "Guardar" cierra el modal, la lista de `/kids` no cambia y el formulario queda vacío la próxima vez que se abre.
-- [ ] "Cancelar", la tecla `Escape` y el clic en el backdrop cierran el modal sin modificar `/kids`.
-- [ ] A 1280×800 el modal abierto luce como `references/pantallas/agregar-nino.dc.html` (comparación visual; no hay screenshot PNG de esta pantalla) y `/kids` cerrado sigue idéntico a `references/screenshots/ninos.png`.
+- [x] `npm run lint` y `npx tsc --noEmit` pasan sin errores.
+- [x] En `/kids`, clic en "Agregar niño" abre el modal centrado sobre la pantalla (backdrop translúcido que cubre todo, incluido el sidebar).
+- [x] El modal replica `agregar-nino.dc.html`: header "Cancelar" (izq, `#94887B`) / "Agregar niño" (Fredoka) / "Guardar" (der, `#D9583C`, weight 800), y los 5 campos con sus labels ("NOMBRE COMPLETO", "FECHA DE NACIMIENTO", "SALA", "ALERGIAS (ETIQUETAS)", "NOTAS MÉDICAS") y placeholders literales.
+- [x] El campo de fecha solo acepta dígitos y muestra el formato `dd/mm/aaaa` con las barras auto-insertadas.
+- [x] El selector SALA muestra las opciones "Soles", "Lunas" y "Estrellas", con "Soles" preseleccionada, y un chevron a la derecha.
+- [x] Al pulsar "Guardar" con nombre vacío, fecha incompleta o sin sala, los campos faltantes quedan con borde rojo y el modal permanece abierto.
+- [x] Con los 3 obligatorios completos, "Guardar" cierra el modal, la lista de `/kids` no cambia y el formulario queda vacío la próxima vez que se abre.
+- [x] "Cancelar", la tecla `Escape` y el clic en el backdrop cierran el modal sin modificar `/kids`.
+- [x] A 1280×800 el modal abierto luce como `references/pantallas/agregar-nino.dc.html` (comparación visual; no hay screenshot PNG de esta pantalla) y `/kids` cerrado sigue idéntico a `references/screenshots/ninos.png`.
 
 ## Decisions
 
