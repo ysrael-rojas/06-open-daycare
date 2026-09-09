@@ -1,6 +1,6 @@
 # SPEC 03 — Login y activación de cuenta
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 01
 > **Date:** 2026-09-09
 > **Objective:** Implementar las rutas standalone `/login` y `/activar-cuenta` replicando visualmente `references/pantallas/login.dc.html` y `activar-cuenta.dc.html` —sin el selector "Personal / Familia" en el login y sin navegación real en ningún elemento—, sin agregarlas al sidebar.
@@ -36,15 +36,15 @@ Esta spec no introduce estructuras de datos nuevas ni archivos de mock. Los text
 
 ## Acceptance criteria
 
-- [ ] `npm run lint` y `npx tsc --noEmit` pasan sin errores.
-- [ ] `/login` tiene layout de 2 columnas: panel izquierdo degradado con decoraciones, "OpenDayCare", h1 "El día de cada niño, compartido con su familia.", párrafo y "🌿 Guardería Sala Soles"; derecha con "Iniciar sesión", "Ingresá para ver el día de hoy." y el formulario.
-- [ ] En `/login` no aparece el texto "INGRESO COMO", ni "Personal", ni "Familia"; el input de email está vacío y el de contraseña muestra placeholder "••••••••".
-- [ ] En `/login` están "¿Olvidaste tu contraseña?", el CTA "Iniciar sesión" y el footer "¿Te invitó la guardería? Activá tu cuenta" (en `#C5503A`).
-- [ ] `/activar-cuenta` muestra logo, "Bienvenida a OpenDayCare", la card "Te invitaron a seguir a / Mateo · Sala Soles" (avatar "M"), y los inputs pre-rellenados `7K4P9`, `lucia.fernandez@gmail.com` y contraseña enmascarada (con borde `#F2A78E`).
-- [ ] En `/activar-cuenta` la fila de autorización está marcada (`#FBF1D6`, check `#5FB97E`, texto "Autorizo a la guardería…"), con CTA "Activar mi cuenta" y footer "¿Ya tenés cuenta? Iniciar sesión".
-- [ ] Ninguna de las dos páginas importa `Sidebar` ni muestra el nav de la app (Feed/Niños/Avisos/Mi cuenta).
-- [ ] Clic en cualquier botón o vínculo de ambas páginas no navega a ninguna ruta (no produce 404 ni cambio de URL).
-- [ ] A 1280×800 `/login` y `/activar-cuenta` lucen idénticas a sus mockups `.dc.html` (no hay screenshots para estas dos pantallas; comparación visual manual + verificación con Playwright del texto/estructura).
+- [x] `npm run lint` y `npx tsc --noEmit` pasan sin errores.
+- [x] `/login` tiene layout de 2 columnas: panel izquierdo degradado con decoraciones, "OpenDayCare", h1 "El día de cada niño, compartido con su familia.", párrafo y "🌿 Guardería Sala Soles"; derecha con "Iniciar sesión", "Ingresá para ver el día de hoy." y el formulario.
+- [x] En `/login` no aparece el texto "INGRESO COMO", ni "Personal", ni "Familia"; el input de email está vacío y el de contraseña muestra placeholder "••••••••".
+- [x] En `/login` están "¿Olvidaste tu contraseña?", el CTA "Iniciar sesión" y el footer "¿Te invitó la guardería? Activá tu cuenta" (en `#C5503A`).
+- [x] `/activar-cuenta` muestra logo, "Bienvenida a OpenDayCare", la card "Te invitaron a seguir a / Mateo · Sala Soles" (avatar "M"), y los inputs pre-rellenados `7K4P9`, `lucia.fernandez@gmail.com` y contraseña enmascarada (con borde `#F2A78E`).
+- [x] En `/activar-cuenta` la fila de autorización está marcada (`#FBF1D6`, check `#5FB97E`, texto "Autorizo a la guardería…"), con CTA "Activar mi cuenta" y footer "¿Ya tenés cuenta? Iniciar sesión".
+- [x] Ninguna de las dos páginas importa `Sidebar` ni muestra el nav de la app (Feed/Niños/Avisos/Mi cuenta).
+- [x] Clic en cualquier botón o vínculo de ambas páginas no navega a ninguna ruta (no produce 404 ni cambio de URL).
+- [x] A 1280×800 `/login` y `/activar-cuenta` lucen idénticas a sus mockups `.dc.html` (no hay screenshots para estas dos pantallas; comparación visual manual + verificación con Playwright del texto/estructura).
 
 ## Decisions
 
