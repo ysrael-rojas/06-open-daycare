@@ -1,0 +1,13 @@
+
+> open-daycare@0.1.0 dev
+> next dev
+
+⚠ Port 3000 is in use by process 14732, using available port 3002 instead.
+▲ Next.js 16.3.4 (Turbopack)
+- Local:         http://localhost:3002
+- Network:       http://192.168.1.67:3002
+✓ Ready in 1132ms
+✓ Running next.config.ts took 162ms
+
+ GET /kids 200 in 3.3s (next.js: 2.6s, application-code: 759ms)
+ GET /kids 200 in 107ms (next.js: 13ms, application-code: 94ms)

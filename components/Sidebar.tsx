@@ -1,4 +1,5 @@
 import type { ComponentType } from "react";
+import Link from "next/link";
 import { currentUser, room } from "@/data/mock/feed";
 import {
   BellIcon,
@@ -12,9 +13,9 @@ import {
 
 export type NavItemKey = "feed" | "children" | "announcements" | "account";
 
-export const NAV_ITEMS: { key: NavItemKey; label: string }[] = [
-  { key: "feed", label: "Feed" },
-  { key: "children", label: "Niños" },
+export const NAV_ITEMS: { key: NavItemKey; label: string; href?: string }[] = [
+  { key: "feed", label: "Feed", href: "/" },
+  { key: "children", label: "Niños", href: "/kids" },
   { key: "announcements", label: "Avisos" },
   { key: "account", label: "Mi cuenta" },
 ];
@@ -57,19 +58,37 @@ export default function Sidebar({
         {NAV_ITEMS.map((item) => {
           const Icon = NAV_ICONS[item.key];
           const isActive = item.key === activeItem;
-          return (
-            <a
-              key={item.key}
-              aria-current={isActive ? "page" : undefined}
-              className={`flex items-center gap-3 rounded-xl px-3 py-[11px] text-[14.5px] ${
-                isActive
-                  ? "bg-[#FBE3D8] font-extrabold text-[#D9583C]"
-                  : "font-semibold text-[#6E6359]"
-              }`}
-            >
+          const content = (
+            <>
               <Icon className="h-[19px] w-[19px] flex-none" />
               {item.label}
-            </a>
+            </>
+          );
+          const className = `flex items-center gap-3 rounded-xl px-3 py-[11px] text-[14.5px] ${
+            isActive
+              ? "bg-[#FBE3D8] font-extrabold text-[#D9583C]"
+              : "font-semibold text-[#6E6359]"
+          }`;
+          if (item.href) {
+            return (
+              <Link
+                key={item.key}
+                href={item.href}
+                aria-current={isActive ? "page" : undefined}
+                className={className}
+              >
+                {content}
+              </Link>
+            );
+          }
+          return (
+            <span
+              key={item.key}
+              aria-current={isActive ? "page" : undefined}
+              className={className}
+            >
+              {content}
+            </span>
           );
         })}
       </nav>
