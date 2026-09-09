@@ -73,6 +73,21 @@ export interface Kid {
 
 export const kidsRoom = { name: "Sala Soles", shortName: "Soles" };
 
+// --- Kid rooms ------------------------------------------------------------
+
+export interface KidRoom {
+  id: string; // "soles" | "lunas" | "estrellas"
+  name: string; // "Soles" | "Lunas" | "Estrellas" (label visible, español)
+}
+
+export const kidRooms: KidRoom[] = [
+  { id: "soles", name: "Soles" },
+  { id: "lunas", name: "Lunas" },
+  { id: "estrellas", name: "Estrellas" },
+];
+
+export const defaultRoomId = "soles"; // coherencia con kidsRoom (spec 02)
+
 // --- Derived helpers (Spanish labels from English values) ------------------
 
 export const ageLabel = (kid: Kid): string => `${kid.ageYears} años`;
