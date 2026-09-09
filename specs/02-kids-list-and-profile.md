@@ -119,14 +119,14 @@ export const kids: Kid[] = [
 
 ## Acceptance criteria
 
-- [ ] `npm run lint` y `npx tsc --noEmit` pasan sin errores.
-- [ ] `/kids` muestra eyebrow "GESTIÓN", h1 "Niños", botón "Agregar niño", buscador "Buscar niño…" y sección "SALA SOLES · 8 niños" con los 8 niños en grid 2 columnas.
-- [ ] Las cards copian los textos, avatares y colores del mockup; chips "MANÍ" (Mateo), "LACTOSA" (Tomás) y "VINCULAR" (Valentina); el resto muestra chevron. El hover usa borde `#F2A78E` y sube 2px.
-- [ ] Cada card navega a `/kids/[slug]` y el perfil muestra el mismo nombre, edad, sala, alergia y nº de padres que su card.
-- [ ] El perfil de Mateo es idéntico a `perfil-nino.dc.html`: fechas "12 mar 2022" y "feb 2025", nota de maní, padres Lucía (ACTIVA, "Mamá · activa") y Diego (PENDIENTE, "Papá · invitación enviada"), botón "Resumen del día" y enlaces "Editar"/"Vincular otro padre" presentes.
-- [ ] "Volver a Niños" y el nav (Feed → `/`, Niños → `/kids`) navegan sin 404; enlaces sin ruta (Editar, Agregar niño, Nueva publicación, Resumen del día, Vincular otro padre, logout) no navegan a rutas inexistentes.
-- [ ] `/kids/slug-desconocido` renderiza 404 (sin error en consola).
-- [ ] A 1280×800 `/kids` luce idéntica a `references/screenshots/ninos.png` (comparación visual manual) y `/kids/mateo-fernandez` al mockup `perfil-nino.dc.html` (no hay screenshot del perfil).
+- [x] `npm run lint` y `npx tsc --noEmit` pasan sin errores.
+- [x] `/kids` muestra eyebrow "GESTIÓN", h1 "Niños", botón "Agregar niño", buscador "Buscar niño…" y sección "SALA SOLES · 8 niños" con los 8 niños en grid 2 columnas.
+- [x] Las cards copian los textos, avatares y colores del mockup; chips "MANÍ" (Mateo), "LACTOSA" (Tomás) y "VINCULAR" (Valentina); el resto muestra chevron. El hover usa borde `#F2A78E` y sube 2px.
+- [x] Cada card navega a `/kids/[slug]` y el perfil muestra el mismo nombre, edad, sala, alergia y nº de padres que su card.
+- [x] El perfil de Mateo es idéntico a `perfil-nino.dc.html`: fechas "12 mar 2022" y "feb 2025", nota de maní, padres Lucía (ACTIVA, "Mamá · activa") y Diego (PENDIENTE, "Papá · invitación enviada"), botón "Resumen del día" y enlaces "Editar"/"Vincular otro padre" presentes.
+- [x] "Volver a Niños" y el nav (Feed → `/`, Niños → `/kids`) navegan sin 404; enlaces sin ruta (Editar, Agregar niño, Nueva publicación, Resumen del día, Vincular otro padre, logout) no navegan a rutas inexistentes.
+- [x] `/kids/slug-desconocido` renderiza 404 (sin error en consola).
+- [x] A 1280×800 `/kids` luce idéntica a `references/screenshots/ninos.png` (comparación visual manual) y `/kids/mateo-fernandez` al mockup `perfil-nino.dc.html` (no hay screenshot del perfil).
 
 ## Decisions
 
