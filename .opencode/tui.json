@@ -1,0 +1,10 @@
+{
+  "plugin": [
+    [
+      "opencode-provider-balance@latest",
+      {
+        "enabled": true
+      }
+    ]
+  ]
+}
