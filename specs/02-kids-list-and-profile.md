@@ -1,6 +1,6 @@
 # SPEC 02 — Niños: listado y perfil
 
-> **Status:** Draft
+> **Status:** Aprobado
 > **Depends on:** SPEC 01
 > **Date:** 2026-09-09
 > **Objective:** Implementar las pantallas de niños (`/kids`) y perfil de niño (`/kids/[slug]`) replicando visualmente `references/pantallas/ninos.dc.html` y `perfil-nino.dc.html`, sin autenticación ni persistencia.
