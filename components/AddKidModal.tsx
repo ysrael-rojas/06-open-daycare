@@ -12,13 +12,42 @@ const INITIAL_FORM = {
   medicalNotes: "",
 };
 
-const INITIAL_ERRORS = {
-  fullName: false,
-  birthDate: false,
-  roomId: false,
+type FormErrors = {
+  fullName: string | null;
+  birthDate: string | null;
 };
 
-const isCompleteDate = (value: string) => /^\d{2}\/\d{2}\/\d{4}$/.test(value);
+const INITIAL_ERRORS: FormErrors = {
+  fullName: null,
+  birthDate: null,
+};
+
+const DATE_PATTERN = /^\d{2}\/\d{2}\/\d{4}$/;
+
+function isValidBirthDate(value: string): boolean {
+  const match = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(value);
+  if (!match) return false;
+  const day = Number(match[1]);
+  const month = Number(match[2]);
+  const year = Number(match[3]);
+  if (month < 1 || month > 12) return false;
+  const daysInMonth = new Date(year, month, 0).getDate();
+  return day >= 1 && day <= daysInMonth;
+}
+
+function validate(form: typeof INITIAL_FORM): FormErrors {
+  let birthDate: string | null = null;
+  if (!DATE_PATTERN.test(form.birthDate)) {
+    birthDate = "Ingresa la fecha completa (dd/mm/aaaa).";
+  } else if (!isValidBirthDate(form.birthDate)) {
+    birthDate = "Ingresa una fecha válida.";
+  }
+  return {
+    fullName:
+      form.fullName.trim() === "" ? "Ingresa el nombre completo." : null,
+    birthDate,
+  };
+}
 
 function formatDateMask(raw: string): string {
   const digits = raw.replace(/\D/g, "").slice(0, 8);
@@ -33,27 +62,26 @@ export default function AddKidModal() {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState(INITIAL_FORM);
   const [errors, setErrors] = useState(INITIAL_ERRORS);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
     setForm(INITIAL_FORM);
     setErrors(INITIAL_ERRORS);
+    setSubmitted(false);
   };
 
   const updateField = (field: FormField, value: string) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
-    setErrors((prev) => ({ ...prev, [field]: false }));
+    const next = { ...form, [field]: value };
+    setForm(next);
+    if (submitted) setErrors(validate(next));
   };
 
   const guardar = () => {
-    const nextErrors = {
-      fullName: form.fullName.trim() === "",
-      birthDate: !isCompleteDate(form.birthDate),
-      roomId: form.roomId === "",
-    };
+    setSubmitted(true);
+    const nextErrors = validate(form);
     setErrors(nextErrors);
-    const hasErrors = Object.values(nextErrors).some(Boolean);
-    if (!hasErrors) handleClose();
+    if (!nextErrors.fullName && !nextErrors.birthDate) handleClose();
   };
 
   useEffect(() => {
@@ -121,19 +149,33 @@ export default function AddKidModal() {
             </div>
 
             <div className="px-[26px] py-6">
-              <label
-                htmlFor="add-kid-full-name"
-                className="mb-2 block text-[12px] font-extrabold tracking-[0.7px] text-[#94887B]"
-              >
-                NOMBRE COMPLETO
-              </label>
-              <input
-                id="add-kid-full-name"
-                placeholder="Ej. Martina López"
-                value={form.fullName}
-                onChange={(event) => updateField("fullName", event.target.value)}
-                className={fieldClasses(errors.fullName, "mb-[18px]")}
-              />
+              <div className="mb-[18px]">
+                <label
+                  htmlFor="add-kid-full-name"
+                  className="mb-2 block text-[12px] font-extrabold tracking-[0.7px] text-[#94887B]"
+                >
+                  NOMBRE COMPLETO
+                </label>
+                <input
+                  id="add-kid-full-name"
+                  placeholder="Ej. Martina López"
+                  value={form.fullName}
+                  onChange={(event) => updateField("fullName", event.target.value)}
+                  aria-invalid={Boolean(errors.fullName) || undefined}
+                  aria-describedby={
+                    errors.fullName ? "add-kid-full-name-error" : undefined
+                  }
+                  className={fieldClasses(Boolean(errors.fullName))}
+                />
+                {errors.fullName && (
+                  <p
+                    id="add-kid-full-name-error"
+                    className="mt-2 text-[12px] font-semibold text-[#E46A4F]"
+                  >
+                    {errors.fullName}
+                  </p>
+                )}
+              </div>
 
               <div className="mb-[18px] flex gap-[14px]">
                 <div className="flex-1">
@@ -152,8 +194,20 @@ export default function AddKidModal() {
                     onChange={(event) =>
                       updateField("birthDate", formatDateMask(event.target.value))
                     }
-                    className={fieldClasses(errors.birthDate)}
+                    aria-invalid={Boolean(errors.birthDate) || undefined}
+                    aria-describedby={
+                      errors.birthDate ? "add-kid-birth-date-error" : undefined
+                    }
+                    className={fieldClasses(Boolean(errors.birthDate))}
                   />
+                  {errors.birthDate && (
+                    <p
+                      id="add-kid-birth-date-error"
+                      className="mt-2 text-[12px] font-semibold text-[#E46A4F]"
+                    >
+                      {errors.birthDate}
+                    </p>
+                  )}
                 </div>
                 <div className="flex-1">
                   <label
@@ -168,7 +222,7 @@ export default function AddKidModal() {
                       value={form.roomId}
                       onChange={(event) => updateField("roomId", event.target.value)}
                       className={fieldClasses(
-                        errors.roomId,
+                        false,
                         "cursor-pointer appearance-none font-bold",
                       )}
                     >
