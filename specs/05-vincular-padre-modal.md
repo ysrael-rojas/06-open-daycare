@@ -1,6 +1,6 @@
 # SPEC 05 — Modal "Vincular padre"
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 02
 > **Date:** 2026-09-11
 > **Objective:** Agregar a `/kids/[slug]` un modal "Vincular padre" que se abre al pulsar el enlace "Vincular otro padre" del panel PADRES VINCULADOS, replicando `references/pantallas/vincular-padre.dc.html` como overlay cliente —con nombre del niño dinámico, parentesco seleccionable y validación visual ligera—, sin persistencia. El modal se puede arrastrar por su header y su contenido es desplazable cuando excede la altura de la ventana.
@@ -60,18 +60,18 @@ type LinkParentRelation = "mother" | "father" | "guardian";
 
 ## Acceptance criteria
 
-- [ ] `npm run lint` y `npx tsc --noEmit` pasan sin errores.
-- [ ] En `/kids/mateo-fernandez`, clic en "Vincular otro padre" abre el modal centrado con backdrop oscuro que cubre todo (sidebar incluido).
-- [ ] El modal replica `vincular-padre.dc.html`: header "Vincular padre" (Fredoka) / "a Mateo Fernández" / botón X; bloque azul de aviso; campos NOMBRE DEL PADRE/MADRE y EMAIL con sus placeholders; fila PARENTESCO; caja "CÓDIGO DE INVITACIÓN" con `7K4P9` y "Vence en 7 días"; CTA "Enviar invitación" con ícono.
-- [ ] El subtítulo dice "a {nombre del niño}" y el aviso dice "Solo verá el feed de {primer nombre}" según el perfil abierto (p. ej. "a Mateo Fernández" / "…el feed de Mateo").
-- [ ] PARENTESCO permite seleccionar Mamá, Papá o Tutor/a, con Mamá seleccionada por defecto y el estilo de resaltado del mockup.
-- [ ] El código de invitación muestra siempre `7K4P9`.
-- [ ] Al pulsar "Enviar invitación" con nombre vacío o email inválido, los campos faltantes quedan con borde rojo y el modal permanece abierto.
-- [ ] Con nombre y email válidos, "Enviar invitación" cierra el modal, la lista de padres del perfil no cambia y el formulario queda limpio la próxima vez que se abre.
-- [ ] La X, la tecla `Escape` y el clic en el backdrop cierran el modal sin modificar el perfil.
-- [ ] A 1280×800 el modal abierto luce como `references/pantallas/vincular-padre.dc.html` (no hay screenshot PNG de esta pantalla) y el perfil cerrado sigue idéntico a `perfil-nino.dc.html`.
-- [ ] El modal se puede arrastrar por el header (cursor `move`) y el offset vuelve al centro al cerrar y reabrir.
-- [ ] En una ventana baja (p. ej. 1280×580) el cuerpo del modal hace scroll y se alcanzan el código `7K4P9` y la CTA "Enviar invitación".
+- [x] `npm run lint` y `npx tsc --noEmit` pasan sin errores.
+- [x] En `/kids/mateo-fernandez`, clic en "Vincular otro padre" abre el modal centrado con backdrop oscuro que cubre todo (sidebar incluido).
+- [x] El modal replica `vincular-padre.dc.html`: header "Vincular padre" (Fredoka) / "a Mateo Fernández" / botón X; bloque azul de aviso; campos NOMBRE DEL PADRE/MADRE y EMAIL con sus placeholders; fila PARENTESCO; caja "CÓDIGO DE INVITACIÓN" con `7K4P9` y "Vence en 7 días"; CTA "Enviar invitación" con ícono.
+- [x] El subtítulo dice "a {nombre del niño}" y el aviso dice "Solo verá el feed de {primer nombre}" según el perfil abierto (p. ej. "a Mateo Fernández" / "…el feed de Mateo").
+- [x] PARENTESCO permite seleccionar Mamá, Papá o Tutor/a, con Mamá seleccionada por defecto y el estilo de resaltado del mockup.
+- [x] El código de invitación muestra siempre `7K4P9`.
+- [x] Al pulsar "Enviar invitación" con nombre vacío o email inválido, los campos faltantes quedan con borde rojo y el modal permanece abierto.
+- [x] Con nombre y email válidos, "Enviar invitación" cierra el modal, la lista de padres del perfil no cambia y el formulario queda limpio la próxima vez que se abre.
+- [x] La X, la tecla `Escape` y el clic en el backdrop cierran el modal sin modificar el perfil.
+- [x] A 1280×800 el modal abierto luce como `references/pantallas/vincular-padre.dc.html` (no hay screenshot PNG de esta pantalla) y el perfil cerrado sigue idéntico a `perfil-nino.dc.html`.
+- [x] El modal se puede arrastrar por el header (cursor `move`) y el offset vuelve al centro al cerrar y reabrir.
+- [x] En una ventana baja (p. ej. 1280×580) el cuerpo del modal hace scroll y se alcanzan el código `7K4P9` y la CTA "Enviar invitación".
 
 ## Decisions
 
