@@ -1,6 +1,6 @@
 # SPEC 06 — Modal "Nueva publicación"
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 01, SPEC 02
 > **Date:** 2026-09-11
 > **Objective:** Agregar al botón "Nueva publicación" del sidebar un modal que replique `references/pantallas/crear-publicacion.dc.html` como overlay cliente —selección múltiple de niños en PARA con "Toda la sala" excluyente, tipo único y contenido precargado—, sin persistencia.
@@ -83,19 +83,19 @@ El primer nombre de cada chip se deriva con `kid.fullName.split(" ")[0]`.
 
 ## Acceptance criteria
 
-- [ ] `npm run lint` y `npx tsc --noEmit` pasan sin errores.
-- [ ] En `/`, clic en "Nueva publicación" abre el modal centrado con backdrop oscuro que cubre todo (sidebar incluido).
-- [ ] El modal replica `crear-publicacion.dc.html`: header "Cancelar" / "Nueva publicación" (Fredoka) / "Publicar" (`#D9583C`), secciones PARA, TIPO, DESCRIPCIÓN y FOTOS con sus labels y estilos.
-- [ ] PARA muestra los 8 niños de `data/mock/kids.ts` (con sus iniciales y colores) más el chip "Toda la sala".
-- [ ] Mateo aparece seleccionado al abrir, con el estilo `#3F362E`/texto blanco del mockup.
-- [ ] Se pueden marcar/desmarcar varios niños a la vez.
-- [ ] Marcar "Toda la sala" desmarca todos los niños; marcar cualquier niño desmarca "Toda la sala".
-- [ ] TIPO permite elegir un solo tipo, con "Comida" seleccionada por defecto; el seleccionado usa el color lleno del mockup y el resto se ve neutro.
-- [ ] La DESCRIPCIÓN arranca con el texto del mockup y es editable.
-- [ ] FOTOS muestra la miniatura con ícono de imagen y el tile "Agregar" (sin carga real).
-- [ ] "Cancelar", la tecla `Escape` y el clic en el backdrop cierran el modal sin modificar el feed.
-- [ ] "Publicar" cierra el modal (sin validación) y al reabrir el formulario vuelve al estado inicial (Mateo, Comida, texto y foto).
-- [ ] A 1280×800 el modal abierto luce como `references/pantallas/crear-publicacion.dc.html` / `references/screenshots/compose.png`, y el feed cerrado sigue idéntico a `references/screenshots/feed.png`.
+- [x] `npm run lint` y `npx tsc --noEmit` pasan sin errores.
+- [x] En `/`, clic en "Nueva publicación" abre el modal centrado con backdrop oscuro que cubre todo (sidebar incluido).
+- [x] El modal replica `crear-publicacion.dc.html`: header "Cancelar" / "Nueva publicación" (Fredoka) / "Publicar" (`#D9583C`), secciones PARA, TIPO, DESCRIPCIÓN y FOTOS con sus labels y estilos.
+- [x] PARA muestra los 8 niños de `data/mock/kids.ts` (con sus iniciales y colores) más el chip "Toda la sala".
+- [x] Mateo aparece seleccionado al abrir, con el estilo `#3F362E`/texto blanco del mockup.
+- [x] Se pueden marcar/desmarcar varios niños a la vez.
+- [x] Marcar "Toda la sala" desmarca todos los niños; marcar cualquier niño desmarca "Toda la sala".
+- [x] TIPO permite elegir un solo tipo, con "Comida" seleccionada por defecto; el seleccionado usa el color lleno del mockup y el resto se ve neutro.
+- [x] La DESCRIPCIÓN arranca con el texto del mockup y es editable.
+- [x] FOTOS muestra la miniatura con ícono de imagen y el tile "Agregar" (sin carga real).
+- [x] "Cancelar", la tecla `Escape` y el clic en el backdrop cierran el modal sin modificar el feed.
+- [x] "Publicar" cierra el modal (sin validación) y al reabrir el formulario vuelve al estado inicial (Mateo, Comida, texto y foto).
+- [x] A 1280×800 el modal abierto luce como `references/pantallas/crear-publicacion.dc.html` / `references/screenshots/compose.png`, y el feed cerrado sigue idéntico a `references/screenshots/feed.png`.
 
 ## Decisions
 
