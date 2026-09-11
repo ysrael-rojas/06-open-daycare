@@ -5,11 +5,11 @@ import {
   BellIcon,
   HomeIcon,
   LogoutIcon,
-  PlusIcon,
   SunIcon,
   UserIcon,
   UsersIcon,
 } from "@/components/icons";
+import NewPostModal from "@/components/NewPostModal";
 
 export type NavItemKey = "feed" | "children" | "announcements" | "account";
 
@@ -46,13 +46,7 @@ export default function Sidebar({
         </div>
       </div>
 
-      <button
-        type="button"
-        className="mb-[18px] flex w-full items-center justify-center gap-2 rounded-[14px] bg-[linear-gradient(180deg,#F4977E,#EE8164)] px-3 py-3 text-[14.5px] font-extrabold text-white shadow-[0_8px_18px_-8px_rgba(238,129,100,0.75)]"
-      >
-        <PlusIcon className="h-[17px] w-[17px]" />
-        Nueva publicación
-      </button>
+      <NewPostModal />
 
       <nav className="flex flex-1 flex-col gap-1">
         {NAV_ITEMS.map((item) => {
