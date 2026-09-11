@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CloseIcon, InfoIcon, PlusIcon, SendIcon } from "@/components/icons";
 
 type LinkParentRelation = "mother" | "father" | "guardian";
@@ -11,10 +11,86 @@ const RELATION_OPTIONS: { value: LinkParentRelation; label: string }[] = [
   { value: "guardian", label: "Tutor/a" },
 ];
 
+const INITIAL_FORM: {
+  fullName: string;
+  email: string;
+  relation: LinkParentRelation;
+} = {
+  fullName: "",
+  email: "",
+  relation: "mother",
+};
+
+type FormErrors = {
+  fullName: boolean;
+  email: boolean;
+};
+
+const INITIAL_ERRORS: FormErrors = {
+  fullName: false,
+  email: false,
+};
+
+const EMAIL_PATTERN = /^\S+@\S+\.\S+$/;
+
+function validate(form: typeof INITIAL_FORM): FormErrors {
+  return {
+    fullName: form.fullName.trim() === "",
+    email: !EMAIL_PATTERN.test(form.email.trim()),
+  };
+}
+
+type FormField = "fullName" | "email";
+
 export default function LinkParentModal({ kidName }: { kidName: string }) {
   const [open, setOpen] = useState(false);
-  const [relation, setRelation] = useState<LinkParentRelation>("mother");
+  const [form, setForm] = useState(INITIAL_FORM);
+  const [errors, setErrors] = useState(INITIAL_ERRORS);
+  const [submitted, setSubmitted] = useState(false);
   const firstName = kidName.split(" ")[0];
+
+  const reset = useCallback(() => {
+    setForm(INITIAL_FORM);
+    setErrors(INITIAL_ERRORS);
+    setSubmitted(false);
+  }, []);
+
+  const handleOpen = () => {
+    reset();
+    setOpen(true);
+  };
+
+  const handleClose = useCallback(() => {
+    setOpen(false);
+    reset();
+  }, [reset]);
+
+  const updateField = (field: FormField, value: string) => {
+    const next = { ...form, [field]: value };
+    setForm(next);
+    if (submitted) setErrors(validate(next));
+  };
+
+  const enviar = () => {
+    setSubmitted(true);
+    const nextErrors = validate(form);
+    setErrors(nextErrors);
+    if (!nextErrors.fullName && !nextErrors.email) handleClose();
+  };
+
+  useEffect(() => {
+    if (!open) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") handleClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [open, handleClose]);
+
+  const fieldClasses = (hasError: boolean, extra = "") =>
+    `w-full rounded-[14px] border-[1.5px] bg-white px-4 py-[13px] text-[15px] text-[#3F362E] placeholder:text-[#B6A99B] ${
+      hasError ? "border-[#E46A4F]" : "border-[#EADFD0]"
+    } ${extra}`;
 
   return (
     <>
@@ -22,7 +98,7 @@ export default function LinkParentModal({ kidName }: { kidName: string }) {
         type="button"
         aria-haspopup="dialog"
         aria-expanded={open}
-        onClick={() => setOpen(true)}
+        onClick={handleOpen}
         className="flex items-center gap-3 px-0 pb-2 pt-2"
       >
         <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full border-[1.5px] border-dashed border-[#D8CBBA] text-[#B0A290]">
@@ -36,7 +112,7 @@ export default function LinkParentModal({ kidName }: { kidName: string }) {
       {open && (
         <div
           onClick={(event) => {
-            if (event.target === event.currentTarget) setOpen(false);
+            if (event.target === event.currentTarget) handleClose();
           }}
           className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(63,54,46,0.5)] p-6"
         >
@@ -60,7 +136,7 @@ export default function LinkParentModal({ kidName }: { kidName: string }) {
               <button
                 type="button"
                 aria-label="Cerrar"
-                onClick={() => setOpen(false)}
+                onClick={handleClose}
                 className="flex h-[34px] w-[34px] flex-none items-center justify-center rounded-[10px] bg-[#F0E6D8] text-[#94887B]"
               >
                 <CloseIcon className="h-[18px] w-[18px]" />
@@ -85,7 +161,10 @@ export default function LinkParentModal({ kidName }: { kidName: string }) {
               <input
                 id="link-parent-name"
                 placeholder="Ej. Diego Fernández"
-                className="mb-[18px] w-full rounded-[14px] border-[1.5px] border-[#EADFD0] bg-white px-4 py-[13px] text-[15px] text-[#3F362E] placeholder:text-[#B6A99B]"
+                value={form.fullName}
+                onChange={(event) => updateField("fullName", event.target.value)}
+                aria-invalid={errors.fullName || undefined}
+                className={fieldClasses(errors.fullName, "mb-[18px]")}
               />
 
               <label
@@ -98,7 +177,10 @@ export default function LinkParentModal({ kidName }: { kidName: string }) {
                 id="link-parent-email"
                 type="email"
                 placeholder="correo@ejemplo.com"
-                className="mb-[18px] w-full rounded-[14px] border-[1.5px] border-[#EADFD0] bg-white px-4 py-[13px] text-[15px] text-[#3F362E] placeholder:text-[#B6A99B]"
+                value={form.email}
+                onChange={(event) => updateField("email", event.target.value)}
+                aria-invalid={errors.email || undefined}
+                className={fieldClasses(errors.email, "mb-[18px]")}
               />
 
               <div className="mb-[10px] text-[12px] font-extrabold tracking-[0.7px] text-[#94887B]">
@@ -106,13 +188,15 @@ export default function LinkParentModal({ kidName }: { kidName: string }) {
               </div>
               <div className="mb-5 flex gap-[9px]">
                 {RELATION_OPTIONS.map((option) => {
-                  const selected = relation === option.value;
+                  const selected = form.relation === option.value;
                   return (
                     <button
                       key={option.value}
                       type="button"
                       aria-pressed={selected}
-                      onClick={() => setRelation(option.value)}
+                      onClick={() =>
+                        setForm({ ...form, relation: option.value })
+                      }
                       className={`flex-1 rounded-full border-[1.5px] px-[11px] py-[11px] text-[14px] font-extrabold ${
                         selected
                           ? "border-[#9FB8EC] bg-[#CCD8F4] text-[#4E72C8]"
@@ -139,6 +223,7 @@ export default function LinkParentModal({ kidName }: { kidName: string }) {
 
               <button
                 type="button"
+                onClick={enviar}
                 className="flex w-full items-center justify-center gap-[9px] rounded-[14px] bg-[linear-gradient(180deg,#F4977E,#EE8164)] px-3 py-[14px] text-[15.5px] font-extrabold text-white shadow-[0_10px_22px_-8px_rgba(238,129,100,0.7)]"
               >
                 <SendIcon className="h-[19px] w-[19px]" />
