@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 import {
   AlertTriangleIcon,
   ChevronLeftIcon,
-  PlusIcon,
   SunIcon,
 } from "@/components/icons";
+import LinkParentModal from "@/components/LinkParentModal";
 import Sidebar from "@/components/Sidebar";
 import {
   ALLERGY_META,
@@ -152,14 +152,7 @@ export default async function KidProfilePage(props: PageProps<"/kids/[slug]">) {
                       </div>
                     );
                   })}
-                  <a className="flex items-center gap-3 px-0 pb-2 pt-2">
-                    <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full border-[1.5px] border-dashed border-[#D8CBBA] text-[#B0A290]">
-                      <PlusIcon className="h-[18px] w-[18px]" />
-                    </span>
-                    <span className="text-[14.5px] font-extrabold text-[#C5503A]">
-                      Vincular otro padre
-                    </span>
-                  </a>
+                  <LinkParentModal kidName={kid.fullName} />
                 </div>
               </div>
             </div>
