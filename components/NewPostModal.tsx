@@ -28,6 +28,16 @@ const INITIAL_FORM: NewPostForm = {
     "Pintamos con témperas esta mañana. Mateo eligió el azul para todo y se concentró un montón.",
 };
 
+const POST_TYPES: { id: PostType; label: string; bg: string; color: string }[] = [
+  { id: "food", label: "Comida", bg: "#9A7B1E", color: "#FFFFFF" },
+  { id: "nap", label: "Siesta", bg: "#E7DCF6", color: "#7B5FC0" },
+  { id: "activity", label: "Actividad", bg: "#2E89A6", color: "#FFFFFF" },
+  { id: "achievement", label: "Logro", bg: "#CFEBD8", color: "#3E9B6C" },
+  { id: "mood", label: "Ánimo", bg: "#F9D2DE", color: "#C56486" },
+  { id: "photo", label: "Foto", bg: "#FBD8CC", color: "#D9684A" },
+  { id: "announcement", label: "Anuncio", bg: "#CCD8F4", color: "#4E72C8" },
+];
+
 export default function NewPostModal() {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState(INITIAL_FORM);
@@ -157,6 +167,37 @@ export default function NewPostModal() {
                 >
                   Toda la sala
                 </button>
+              </div>
+
+              <div className="mb-[10px] text-[12px] font-extrabold tracking-[0.7px] text-[#94887B]">
+                TIPO
+              </div>
+              <div className="mb-[22px] flex flex-wrap gap-[9px]">
+                {POST_TYPES.map((type) => {
+                  const selected = form.type === type.id;
+                  return (
+                    <button
+                      key={type.id}
+                      type="button"
+                      aria-pressed={selected}
+                      onClick={() =>
+                        setForm((prev) => ({ ...prev, type: type.id }))
+                      }
+                      style={
+                        selected
+                          ? { backgroundColor: type.bg, color: type.color }
+                          : undefined
+                      }
+                      className={`rounded-full border-[1.5px] px-4 py-2 text-[13.5px] font-extrabold ${
+                        selected
+                          ? "border-transparent"
+                          : "border-[#ECE0D0] bg-[#FFFDF9] text-[#6E6359]"
+                      }`}
+                    >
+                      {type.label}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
