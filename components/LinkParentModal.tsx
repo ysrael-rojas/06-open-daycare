@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { PointerEvent as ReactPointerEvent } from "react";
 import { CloseIcon, InfoIcon, PlusIcon, SendIcon } from "@/components/icons";
 
 type LinkParentRelation = "mother" | "father" | "guardian";
@@ -47,12 +48,21 @@ export default function LinkParentModal({ kidName }: { kidName: string }) {
   const [form, setForm] = useState(INITIAL_FORM);
   const [errors, setErrors] = useState(INITIAL_ERRORS);
   const [submitted, setSubmitted] = useState(false);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const dragRef = useRef<{
+    pointerId: number;
+    startX: number;
+    startY: number;
+    originX: number;
+    originY: number;
+  } | null>(null);
   const firstName = kidName.split(" ")[0];
 
   const reset = useCallback(() => {
     setForm(INITIAL_FORM);
     setErrors(INITIAL_ERRORS);
     setSubmitted(false);
+    setOffset({ x: 0, y: 0 });
   }, []);
 
   const handleOpen = () => {
@@ -64,6 +74,32 @@ export default function LinkParentModal({ kidName }: { kidName: string }) {
     setOpen(false);
     reset();
   }, [reset]);
+
+  const handleDragStart = (event: ReactPointerEvent<HTMLDivElement>) => {
+    dragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      originX: offset.x,
+      originY: offset.y,
+    };
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handleDragMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    setOffset({
+      x: drag.originX + (event.clientX - drag.startX),
+      y: drag.originY + (event.clientY - drag.startY),
+    });
+  };
+
+  const handleDragEnd = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (dragRef.current?.pointerId === event.pointerId) {
+      dragRef.current = null;
+    }
+  };
 
   const updateField = (field: FormField, value: string) => {
     const next = { ...form, [field]: value };
@@ -121,9 +157,16 @@ export default function LinkParentModal({ kidName }: { kidName: string }) {
             aria-modal="true"
             aria-labelledby="link-parent-title"
             onClick={(event) => event.stopPropagation()}
-            className="w-full max-w-[480px] overflow-hidden rounded-[24px] border border-[#ECE0D0] bg-[#FBF4EC] shadow-[0_20px_50px_-24px_rgba(63,54,46,0.35)]"
+            style={{ transform: `translate(${offset.x}px, ${offset.y}px)` }}
+            className="flex max-h-[calc(100vh-3rem)] w-full max-w-[480px] flex-col overflow-hidden rounded-[24px] border border-[#ECE0D0] bg-[#FBF4EC] shadow-[0_20px_50px_-24px_rgba(63,54,46,0.35)]"
           >
-            <div className="flex items-center justify-between gap-4 border-b border-[#ECE0D0] px-[26px] py-5">
+            <div
+              onPointerDown={handleDragStart}
+              onPointerMove={handleDragMove}
+              onPointerUp={handleDragEnd}
+              onPointerCancel={handleDragEnd}
+              className="flex cursor-move touch-none select-none items-center justify-between gap-4 border-b border-[#ECE0D0] px-[26px] py-5"
+            >
               <div>
                 <div
                   id="link-parent-title"
@@ -137,13 +180,14 @@ export default function LinkParentModal({ kidName }: { kidName: string }) {
                 type="button"
                 aria-label="Cerrar"
                 onClick={handleClose}
-                className="flex h-[34px] w-[34px] flex-none items-center justify-center rounded-[10px] bg-[#F0E6D8] text-[#94887B]"
+                onPointerDown={(event) => event.stopPropagation()}
+                className="flex h-[34px] w-[34px] flex-none cursor-pointer items-center justify-center rounded-[10px] bg-[#F0E6D8] text-[#94887B]"
               >
                 <CloseIcon className="h-[18px] w-[18px]" />
               </button>
             </div>
 
-            <div className="px-[26px] py-[22px]">
+            <div className="overflow-y-auto px-[26px] py-[22px]">
               <div className="mb-5 flex gap-[11px] rounded-[14px] bg-[#E3ECFB] px-4 py-[13px]">
                 <InfoIcon className="mt-[1px] h-5 w-5 flex-none text-[#4E72C8]" />
                 <span className="text-[13.5px] leading-[1.45] text-[#3F5694]">

@@ -3,7 +3,7 @@
 > **Status:** Aprobado
 > **Depends on:** SPEC 02
 > **Date:** 2026-09-11
-> **Objective:** Agregar a `/kids/[slug]` un modal "Vincular padre" que se abre al pulsar el enlace "Vincular otro padre" del panel PADRES VINCULADOS, replicando `references/pantallas/vincular-padre.dc.html` como overlay cliente —con nombre del niño dinámico, parentesco seleccionable y validación visual ligera—, sin persistencia.
+> **Objective:** Agregar a `/kids/[slug]` un modal "Vincular padre" que se abre al pulsar el enlace "Vincular otro padre" del panel PADRES VINCULADOS, replicando `references/pantallas/vincular-padre.dc.html` como overlay cliente —con nombre del niño dinámico, parentesco seleccionable y validación visual ligera—, sin persistencia. El modal se puede arrastrar por su header y su contenido es desplazable cuando excede la altura de la ventana.
 
 ## Scope
 
@@ -21,6 +21,8 @@
 - Validación visual ligera: al pulsar "Enviar invitación" con nombre vacío o email con formato inválido, esos campos quedan con borde rojo `#E46A4F` y el modal no se cierra (sin mensajes de texto).
 - Cierre por: X, tecla `Escape`, clic en el backdrop y "Enviar invitación" (si pasa validación). Al cerrar se resetea el formulario y el parentesco vuelve a Mamá.
 - Íconos nuevos en `components/icons.tsx`: `CloseIcon`, `InfoIcon`, `SendIcon` (geometría copiada del mockup).
+- Modal arrastrable: el header actúa como asa (`cursor-move`, `select-none`), con eventos pointer; el offset se guarda en estado y se resetea al abrir/cerrar. El botón X no inicia el arrastre.
+- Contenido desplazable: el panel limita su altura a la ventana (`max-h`) y el cuerpo usa `overflow-y-auto`, de modo que en pantallas bajas se puede ver el código y la CTA.
 
 **Out of scope (specs futuras):**
 
@@ -52,7 +54,9 @@ type LinkParentRelation = "mother" | "father" | "guardian";
 3. Completar el cuerpo del modal en el mismo componente: bloque informativo `#E3ECFB` con `InfoIcon`, campos NOMBRE/EMAIL, fila PARENTESCO con estado `relation` (`"mother"` por defecto), caja del código `7K4P9` y CTA "Enviar invitación" con `SendIcon`. Verificar visualmente contra `vincular-padre.dc.html`.
 4. Lógica del formulario: estado `{ fullName, email, relation }`; `enviar()` valida nombre no vacío y email con formato válido, marca `errors` y cierra solo si todo pasa; cierre con `Escape` y reset del form + relación al abrir/cerrar. Verificar manualmente: enviar con campos vacíos pinta bordes rojos y no cierra; enviar válido cierra y el próximo abrir está limpio.
 5. Integrar en `app/kids/[slug]/page.tsx`: reemplazar el `<a>` "Vincular otro padre" por `<LinkParentModal kidName={kid.fullName} />`; el resto del perfil queda intacto. Verificar: `/kids/mateo-fernandez` sigue idéntico a `perfil-nino.dc.html` y el botón abre el modal sobre la pantalla.
-6. Pase final `npm run lint` + `npx tsc --noEmit` y verificación con Playwright (abrir por botón, nombre del niño en título/aviso, selección de parentesco, código `7K4P9`, validación roja, cierres por X/Escape/backdrop/Enviar válido).
+6. `components/LinkParentModal.tsx`: hacer el modal desplazable (panel `flex-col` con `max-h` de la ventana y cuerpo `overflow-y-auto`). Verificar en una ventana baja (p. ej. 1280×580) que se alcanzan el código y la CTA.
+7. `components/LinkParentModal.tsx`: hacer el modal arrastrable por el header con pointer events (offset en estado, `setPointerCapture`, `stopPropagation` en la X, reset al cerrar). Verificar: arrastrar mueve el panel y al reabrir vuelve al centro.
+8. Pase final `npm run lint` + `npx tsc --noEmit` y verificación con Playwright (abrir por botón, nombre del niño en título/aviso, selección de parentesco, código `7K4P9`, validación roja, cierres por X/Escape/backdrop/Enviar válido, arrastre por el header y scroll en ventana baja).
 
 ## Acceptance criteria
 
@@ -66,6 +70,8 @@ type LinkParentRelation = "mother" | "father" | "guardian";
 - [ ] Con nombre y email válidos, "Enviar invitación" cierra el modal, la lista de padres del perfil no cambia y el formulario queda limpio la próxima vez que se abre.
 - [ ] La X, la tecla `Escape` y el clic en el backdrop cierran el modal sin modificar el perfil.
 - [ ] A 1280×800 el modal abierto luce como `references/pantallas/vincular-padre.dc.html` (no hay screenshot PNG de esta pantalla) y el perfil cerrado sigue idéntico a `perfil-nino.dc.html`.
+- [ ] El modal se puede arrastrar por el header (cursor `move`) y el offset vuelve al centro al cerrar y reabrir.
+- [ ] En una ventana baja (p. ej. 1280×580) el cuerpo del modal hace scroll y se alcanzan el código `7K4P9` y la CTA "Enviar invitación".
 
 ## Decisions
 
@@ -86,6 +92,8 @@ type LinkParentRelation = "mother" | "father" | "guardian";
 - **Yes:** tipo local `LinkParentRelation` (`mother`/`father`/`guardian`) en el componente. `ParentRelation` de SPEC 02 no incluye "guardian" y describe padres ya vinculados; no se toca ese modelo.
 - **No:** persistir ni agregar el padre a `kid.parents`. El usuario pidió explícitamente "solo interfaz, sin base de datos".
 - **Yes:** trigger dentro de `LinkParentModal`. Mantiene `app/kids/[slug]/page.tsx` como server component, igual que SPEC 04.
+- **Yes:** modal arrastrable por el header y cuerpo con scroll (respuesta del usuario). Permite ver todo el contenido en pantallas bajas sin rehacer el layout.
+- **No:** dejar el modal fijo y sin scroll. En pantallas bajas el contenido quedaba cortado.
 
 ## Risks
 
@@ -95,6 +103,7 @@ type LinkParentRelation = "mother" | "father" | "guardian";
 | Regresión en `/kids/[slug]` (SPEC 02) al convertir el `<a>` en `<button>` dentro del componente | Conservar markup/clases exactas del enlace; verificar el perfil tras el paso 5. |
 | Modal cliente: warning de React o focus/Escape mal manejados | Probar `Escape`, backdrop y `aria-modal` en el paso 6 con Playwright. |
 | El copy dinámico usa solo el primer nombre; nombres compuestos podrían recortarse | Es el comportamiento esperado del aviso ("Solo verá el feed de Mateo"); documentado aquí. |
+| Arrastrar desde el header podría disparar la X o seleccionar texto | `select-none` en el header y `stopPropagation` en la X; verificar el arrastre en el paso 8. |
 
 ## What is **not** in this spec
 
