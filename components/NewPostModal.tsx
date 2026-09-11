@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { PlusIcon } from "@/components/icons";
+import { ImageIcon, PlusIcon } from "@/components/icons";
 import { kids } from "@/data/mock/kids";
 
 type PostType =
@@ -198,6 +198,34 @@ export default function NewPostModal() {
                     </button>
                   );
                 })}
+              </div>
+
+              <div className="mb-[10px] text-[12px] font-extrabold tracking-[0.7px] text-[#94887B]">
+                DESCRIPCIÓN
+              </div>
+              <textarea
+                placeholder="Contá cómo le fue hoy…"
+                value={form.description}
+                onChange={(event) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    description: event.target.value,
+                  }))
+                }
+                className="mb-[22px] min-h-[120px] w-full resize-y rounded-[14px] border-[1.5px] border-[#EADFD0] bg-white px-4 py-[14px] text-[15px] leading-[1.5] text-[#3F362E] placeholder:text-[#B6A99B] focus:outline-none"
+              />
+
+              <div className="mb-[10px] text-[12px] font-extrabold tracking-[0.7px] text-[#94887B]">
+                FOTOS
+              </div>
+              <div className="flex gap-3">
+                <div className="flex h-24 w-24 items-center justify-center rounded-[14px] border border-[#ECE0D0] bg-[#F4ECE1] text-[#CBB89F]">
+                  <ImageIcon className="h-[26px] w-[26px]" />
+                </div>
+                <div className="flex h-24 w-24 cursor-pointer flex-col items-center justify-center gap-[6px] rounded-[14px] border-[1.5px] border-dashed border-[#DBCDBA] bg-[#F4ECE1] text-[#B0A290]">
+                  <PlusIcon className="h-[22px] w-[22px] text-[#C5503A]" />
+                  <span className="text-[12px]">Agregar</span>
+                </div>
               </div>
             </div>
           </div>
