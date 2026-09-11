@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { PlusIcon } from "@/components/icons";
+import { kids } from "@/data/mock/kids";
 
 type PostType =
   | "food"
@@ -29,11 +30,28 @@ const INITIAL_FORM: NewPostForm = {
 
 export default function NewPostModal() {
   const [open, setOpen] = useState(false);
-  const [, setForm] = useState(INITIAL_FORM);
+  const [form, setForm] = useState(INITIAL_FORM);
 
   const handleClose = () => {
     setOpen(false);
     setForm(INITIAL_FORM);
+  };
+
+  const toggleKid = (kidId: string) => {
+    setForm((prev) => {
+      if (prev.allRoom) return { ...prev, allRoom: false, kidIds: [kidId] };
+      const selected = prev.kidIds.includes(kidId);
+      return {
+        ...prev,
+        kidIds: selected
+          ? prev.kidIds.filter((id) => id !== kidId)
+          : [...prev.kidIds, kidId],
+      };
+    });
+  };
+
+  const toggleAllRoom = () => {
+    setForm((prev) => ({ ...prev, allRoom: !prev.allRoom, kidIds: [] }));
   };
 
   useEffect(() => {
@@ -95,7 +113,52 @@ export default function NewPostModal() {
               </button>
             </div>
 
-            <div className="px-[26px] py-6" />
+            <div className="px-[26px] py-6">
+              <div className="mb-[10px] text-[12px] font-extrabold tracking-[0.7px] text-[#94887B]">
+                PARA
+              </div>
+              <div className="mb-[22px] flex flex-wrap gap-[9px]">
+                {kids.map((kid) => {
+                  const selected = !form.allRoom && form.kidIds.includes(kid.id);
+                  return (
+                    <button
+                      key={kid.id}
+                      type="button"
+                      aria-pressed={selected}
+                      onClick={() => toggleKid(kid.id)}
+                      className={`flex items-center gap-2 rounded-full border-[1.5px] py-[6px] pl-[6px] pr-[14px] text-[14px] font-bold ${
+                        selected
+                          ? "border-[#3F362E] bg-[#3F362E] text-white"
+                          : "border-[#ECE0D0] bg-[#FFFDF9] text-[#6E6359]"
+                      }`}
+                    >
+                      <span
+                        className="flex h-[26px] w-[26px] items-center justify-center rounded-full font-display text-[13px] font-semibold"
+                        style={{
+                          backgroundColor: kid.avatarColor,
+                          color: kid.avatarTextColor,
+                        }}
+                      >
+                        {kid.initials}
+                      </span>
+                      {kid.fullName.split(" ")[0]}
+                    </button>
+                  );
+                })}
+                <button
+                  type="button"
+                  aria-pressed={form.allRoom}
+                  onClick={toggleAllRoom}
+                  className={`rounded-full border-[1.5px] px-4 py-[6px] text-[14px] font-bold ${
+                    form.allRoom
+                      ? "border-[#3F362E] bg-[#3F362E] text-white"
+                      : "border-[#ECE0D0] bg-[#FFFDF9] text-[#6E6359]"
+                  }`}
+                >
+                  Toda la sala
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
