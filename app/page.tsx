@@ -1,14 +1,22 @@
+import { redirect } from "next/navigation";
 import { CameraIcon } from "@/components/icons";
 import { PostCard } from "@/components/PostCard";
 import Sidebar from "@/components/Sidebar";
-import { currentUser, room, todayPosts } from "@/data/mock/feed";
+import { room, todayPosts } from "@/data/mock/feed";
+import { getCurrentUser } from "@/utils/auth";
 
-export default function HomePage() {
-  const firstName = currentUser.name.split(" ")[0];
+export default async function HomePage() {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  const firstName = user.fullName.split(" ")[0];
 
   return (
     <div className="flex min-h-screen bg-[#F6ECDF]">
-      <Sidebar />
+      <Sidebar user={user} />
       <main className="h-screen min-w-0 flex-1 overflow-y-auto">
         <div className="mx-auto w-full max-w-[760px] px-10 pb-20 pt-[34px]">
           <div className="mb-6">
@@ -27,11 +35,11 @@ export default function HomePage() {
             <div
               className="flex h-10 w-10 flex-none items-center justify-center rounded-full font-display text-[16px] font-semibold"
               style={{
-                backgroundColor: currentUser.avatarColor,
-                color: currentUser.avatarTextColor,
+                backgroundColor: user.avatarColor,
+                color: user.avatarTextColor,
               }}
             >
-              {currentUser.initials}
+              {user.initials}
             </div>
             <span className="flex-1 text-[15px] text-[#A89A8B]">
               Compartí un momento…
