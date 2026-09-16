@@ -1,6 +1,6 @@
 # SPEC 09 — Login real y protección de rutas
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 03, SPEC 07, SPEC 08
 > **Date:** 2026-09-16
 > **Objective:** Conectar `/login` a Supabase Auth con email y contraseña, proteger `/`, `/kids` y `/kids/[slug]` (redirect optimista en `proxy.ts` + `getClaims()` server-side), cerrar sesión desde el sidebar y mostrar el usuario real de `public.users` en la UI, agregando las migraciones de `auth.identities` y de la política RLS de lectura propia.
@@ -118,21 +118,21 @@ const AVATAR_PALETTE = [
 
 ## Acceptance criteria
 
-- [ ] `npm run lint` y `npx tsc --noEmit` pasan sin errores.
-- [ ] `list_migrations` incluye `seed_staff_email_identity` y `users_select_own_policy`, con espejos en `supabase/migrations/` de la misma versión y el mismo SQL.
-- [ ] Existe exactamente 1 fila en `auth.identities` con `user_id = 22222222-…`, `provider = 'email'`, `provider_id = 22222222-…` y `email = 'ysrael@google.com'`.
-- [ ] `POST /auth/v1/token?grant_type=password` con `ysrael@google.com` / `123456789@` devuelve `access_token`.
-- [ ] `public.users` tiene exactamente una política RLS (`users_select_own`, `select`, rol `authenticated`, `(select auth.uid()) = id`) y `get_advisors(type: "security")` no reporta WARN/ERROR nuevos.
-- [ ] Sin sesión, `/`, `/kids` y `/kids/[slug]` redirigen a `/login`; `/activar-cuenta` responde 200.
-- [ ] Con sesión activa, `/login` redirige a `/`.
-- [ ] En `/login`, credenciales inválidas muestran un mensaje de error en español bajo el formulario, sin cambiar de URL ni romper el layout del mockup.
-- [ ] Mientras el formulario se envía, el CTA "Iniciar sesión" queda deshabilitado.
-- [ ] Login con `ysrael@google.com` / `123456789@` llega al feed `/`.
-- [ ] El sidebar muestra `full_name` real ("Ysrael"), iniciales "Y", el label de rol traducido ("Guardería") y un color de avatar estable derivado del id.
-- [ ] El botón de logout del sidebar cierra la sesión y redirige a `/login`; después, `/` vuelve a redirigir a `/login`.
+- [x] `npm run lint` y `npx tsc --noEmit` pasan sin errores.
+- [x] `list_migrations` incluye `seed_staff_email_identity` y `users_select_own_policy`, con espejos en `supabase/migrations/` de la misma versión y el mismo SQL.
+- [x] Existe exactamente 1 fila en `auth.identities` con `user_id = 22222222-…`, `provider = 'email'`, `provider_id = 22222222-…` y `email = 'ysrael@google.com'`.
+- [x] `POST /auth/v1/token?grant_type=password` con `ysrael@google.com` / `123456789@` devuelve `access_token`.
+- [x] `public.users` tiene exactamente una política RLS (`users_select_own`, `select`, rol `authenticated`, `(select auth.uid()) = id`) y `get_advisors(type: "security")` no reporta WARN/ERROR nuevos.
+- [x] Sin sesión, `/`, `/kids` y `/kids/[slug]` redirigen a `/login`; `/activar-cuenta` responde 200.
+- [x] Con sesión activa, `/login` redirige a `/`.
+- [x] En `/login`, credenciales inválidas muestran un mensaje de error en español bajo el formulario, sin cambiar de URL ni romper el layout del mockup.
+- [x] Mientras el formulario se envía, el CTA "Iniciar sesión" queda deshabilitado.
+- [x] Login con `ysrael@google.com` / `123456789@` llega al feed `/`.
+- [x] El sidebar muestra `full_name` real ("Ysrael"), iniciales "Y", el label de rol traducido ("Guardería") y un color de avatar estable derivado del id.
+- [x] El botón de logout del sidebar cierra la sesión y redirige a `/login`; después, `/` vuelve a redirigir a `/login`.
 - [ ] Si el usuario autenticado no tiene fila en `public.users`, la UI degrada a email/iniciales sin errores de consola.
-- [ ] `data/mock/feed.ts` ya no exporta `currentUser` y ningún componente lo importa.
-- [ ] `/`, `/kids` y `/kids/[slug]` a 1280×800 siguen idénticos a `references/` salvo el nombre/rol del sidebar.
+- [x] `data/mock/feed.ts` ya no exporta `currentUser` y ningún componente lo importa.
+- [x] `/`, `/kids` y `/kids/[slug]` a 1280×800 siguen idénticos a `references/` salvo el nombre/rol del sidebar.
 
 ## Decisions
 
