@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import {
   AlertTriangleIcon,
   ChevronLeftIcon,
@@ -15,8 +15,15 @@ import {
   kidsRoom,
   parentSubtitle,
 } from "@/data/mock/kids";
+import { getCurrentUser } from "@/utils/auth";
 
 export default async function KidProfilePage(props: PageProps<"/kids/[slug]">) {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
   const { slug } = await props.params;
   const kid = kids.find((k) => k.slug === slug);
 
@@ -28,7 +35,7 @@ export default async function KidProfilePage(props: PageProps<"/kids/[slug]">) {
 
   return (
     <div className="flex min-h-screen bg-[#F6ECDF]">
-      <Sidebar activeItem="children" />
+      <Sidebar user={user} activeItem="children" />
       <main className="h-screen min-w-0 flex-1 overflow-y-auto">
         <div className="mx-auto w-full max-w-[820px] px-10 pb-20 pt-[34px]">
           <Link

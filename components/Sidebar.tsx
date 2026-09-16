@@ -1,6 +1,8 @@
 import type { ComponentType } from "react";
 import Link from "next/link";
-import { currentUser, room } from "@/data/mock/feed";
+import { signOut } from "@/app/login/actions";
+import { room } from "@/data/mock/feed";
+import type { CurrentUser } from "@/utils/auth";
 import {
   BellIcon,
   HomeIcon,
@@ -28,8 +30,10 @@ const NAV_ICONS: Record<NavItemKey, ComponentType<{ className?: string }>> = {
 };
 
 export default function Sidebar({
+  user,
   activeItem = "feed",
 }: {
+  user: CurrentUser;
   activeItem?: NavItemKey;
 }) {
   return (
@@ -92,28 +96,30 @@ export default function Sidebar({
           <div
             className="flex h-[38px] w-[38px] flex-none items-center justify-center rounded-full font-display text-[16px] font-semibold"
             style={{
-              backgroundColor: currentUser.avatarColor,
-              color: currentUser.avatarTextColor,
+              backgroundColor: user.avatarColor,
+              color: user.avatarTextColor,
             }}
           >
-            {currentUser.initials}
+            {user.initials}
           </div>
           <div className="min-w-0 flex-1">
             <div className="truncate text-[14px] font-extrabold text-[#3F362E]">
-              {currentUser.name}
+              {user.fullName}
             </div>
             <div className="truncate text-[12px] text-[#A89A8B]">
-              {currentUser.roleLabel}
+              {user.roleLabel}
             </div>
           </div>
-          <button
-            type="button"
-            title="Cerrar sesión"
-            aria-label="Cerrar sesión"
-            className="flex h-8 w-8 flex-none items-center justify-center rounded-[10px] bg-[#F6ECDF] text-[#94887B]"
-          >
-            <LogoutIcon className="h-4 w-4" />
-          </button>
+          <form action={signOut}>
+            <button
+              type="submit"
+              title="Cerrar sesión"
+              aria-label="Cerrar sesión"
+              className="flex h-8 w-8 flex-none cursor-pointer items-center justify-center rounded-[10px] bg-[#F6ECDF] text-[#94887B]"
+            >
+              <LogoutIcon className="h-4 w-4" />
+            </button>
+          </form>
         </div>
       </div>
     </aside>

@@ -48,16 +48,7 @@ export interface Post {
   comments: number;
 }
 
-// --- User & room ----------------------------------------------------------
-
-export const currentUser = {
-  id: "user-caro",
-  name: "Caro Giménez",
-  roleLabel: "Maestra · Soles",
-  initials: "C",
-  avatarColor: "#F2937A",
-  avatarTextColor: "#FFFFFF",
-};
+// --- Room -----------------------------------------------------------------
 
 export const room = {
   headlineLabel: "GUARDERÍA · SALA SOLES",

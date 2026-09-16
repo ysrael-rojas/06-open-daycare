@@ -1,13 +1,21 @@
+import { redirect } from "next/navigation";
 import AddKidModal from "@/components/AddKidModal";
 import { KidCard } from "@/components/KidCard";
 import Sidebar from "@/components/Sidebar";
 import { SearchIcon } from "@/components/icons";
 import { kids, kidsRoom } from "@/data/mock/kids";
+import { getCurrentUser } from "@/utils/auth";
 
-export default function KidsPage() {
+export default async function KidsPage() {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
   return (
     <div className="flex min-h-screen bg-[#F6ECDF]">
-      <Sidebar activeItem="children" />
+      <Sidebar user={user} activeItem="children" />
       <main className="h-screen min-w-0 flex-1 overflow-y-auto">
         <div className="mx-auto w-full max-w-[880px] px-10 pb-20 pt-[34px]">
           <div className="mb-[22px] flex items-end justify-between gap-4">
