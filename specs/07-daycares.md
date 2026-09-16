@@ -58,16 +58,16 @@ Convenciones:
 
 ## Acceptance criteria
 
-- [ ] `supabase/README.md` existe y describe el patrón (ubicación, nombre `<version>_snake_case.sql`, aplicación vía MCP, espejo del SQL, RLS obligatorio).
-- [ ] `list_migrations` incluye una migración llamada `create_daycares`.
-- [ ] Existe `supabase/migrations/<version>_create_daycares.sql` con el mismo SQL y `<version>` igual a la de la migración remota.
-- [ ] `public.daycares` existe con columnas `id uuid`, `name text not null`, `created_at timestamptz not null default now()`.
-- [ ] `id` es primary key con default `gen_random_uuid()`.
-- [ ] `public.daycares` tiene RLS habilitado (`relrowsecurity = true`).
-- [ ] No existe ninguna política RLS en `daycares` (acceso denegado a `anon`/`authenticated`).
-- [ ] Existe exactamente una fila con id `11111111-1111-1111-1111-111111111111` y name `Guardería Sala Soles`.
-- [ ] `get_advisors(type: "security")` no reporta avisos nuevos sobre `daycares`.
-- [ ] `npm run lint` y `npx tsc --noEmit` siguen pasando.
+- [x] `supabase/README.md` existe y describe el patrón (ubicación, nombre `<version>_snake_case.sql`, aplicación vía MCP, espejo del SQL, RLS obligatorio).
+- [x] `list_migrations` incluye una migración llamada `create_daycares`.
+- [x] Existe `supabase/migrations/<version>_create_daycares.sql` con el mismo SQL y `<version>` igual a la de la migración remota.
+- [x] `public.daycares` existe con columnas `id uuid`, `name text not null`, `created_at timestamptz not null default now()`.
+- [x] `id` es primary key con default `gen_random_uuid()`.
+- [x] `public.daycares` tiene RLS habilitado (`relrowsecurity = true`).
+- [x] No existe ninguna política RLS en `daycares` (acceso denegado a `anon`/`authenticated`).
+- [x] Existe exactamente una fila con id `11111111-1111-1111-1111-111111111111` y name `Guardería Sala Soles`.
+- [x] `get_advisors(type: "security")` no reporta avisos WARN/ERROR nuevos sobre `daycares`; el INFO `rls_enabled_no_policy` es esperado mientras RLS esté habilitado sin políticas.
+- [x] `npm run lint` y `npx tsc --noEmit` siguen pasando.
 
 ## Decisions
 

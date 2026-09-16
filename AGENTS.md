@@ -38,6 +38,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Esquema de referencia (tablas, enums, columnas) en `../07-DB-Schema/opendaycare-database-schema.md` (referencia `docs`). Todavía no está aplicado en la base de datos.
 - Convención de idioma: lo persistido en DB va en **inglés** (enums, tags, códigos); las etiquetas en español se traducen en la capa de UI.
 - Antes de tocar la DB (tablas, columnas, migraciones, RLS, índices, funciones, SQL): cargar las skills `supabase` y `supabase-postgres-best-practices`. RLS obligatorio en tablas de esquemas expuestos; no usar `user_metadata` para decisiones de autorización. Verificar los cambios con una query de prueba.
+- **Migraciones obligatorias:** todo cambio en la base de datos (tablas, columnas, índices, RLS/políticas, funciones, triggers, seeds y cualquier DDL o dato persistente) se aplica **siempre** mediante una migración versionada: MCP `apply_migration` + archivo espejo en `supabase/migrations/` (ver `supabase/README.md`). `execute_sql` queda reservado para consultas de lectura y verificación, nunca para cambios persistentes.
 
 ## Flujo de trabajo
 
