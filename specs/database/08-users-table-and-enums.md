@@ -1,6 +1,6 @@
 # SPEC 08 — Tabla `users` y enums `user_role` / `user_status`
 
-> **Status:** Borrador
+> **Status:** Aprobado
 > **Depends on:** SPEC 07
 > **Date:** 2026-09-16
 > **Objective:** Crear en Supabase los enums `user_role` y `user_status` y la tabla `public.users` (perfil de dominio vinculado a `auth.users`, con varios usuarios por daycare), con RLS habilitado sin políticas, trigger de `updated_at` e índice en `daycare_id`, más un seed de un usuario staff de prueba.

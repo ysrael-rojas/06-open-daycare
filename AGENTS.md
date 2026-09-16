@@ -43,6 +43,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Flujo de trabajo
 
 - Features grandes: usa la skill `spec` (spec en `specs/NN-slug.md`, en español, no aprobarla automáticamente) y luego `spec-impl` (crea rama `spec-NN-slug`).
+- **Ubicación de specs:** todo spec que tenga que ver con la base de datos (tablas, columnas, enums, índices, RLS/políticas, migraciones, seeds, etc.) va en `specs/database/NN-slug.md`. El resto de specs va en `specs/NN-slug.md`.
 
 ## Spec Driven Development - Skills
 
