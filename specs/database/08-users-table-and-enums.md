@@ -1,6 +1,6 @@
 # SPEC 08 — Tabla `users` y enums `user_role` / `user_status`
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 07
 > **Date:** 2026-09-16
 > **Objective:** Crear en Supabase los enums `user_role` y `user_status` y la tabla `public.users` (perfil de dominio vinculado a `auth.users`, con varios usuarios por daycare), con RLS habilitado sin políticas, trigger de `updated_at` e índice en `daycare_id`, más un seed de un usuario staff de prueba.
@@ -116,23 +116,23 @@ Convenciones: identificadores en minúsculas/`snake_case`; PK `uuid` = mismo UUI
 
 ## Acceptance criteria
 
-- [ ] `list_migrations` incluye `create_user_enums_and_users` y `seed_staff_user`.
-- [ ] Existen los espejos `supabase/migrations/<v1>_create_user_enums_and_users.sql` y `<v2>_seed_staff_user.sql` con versión igual a la remota y el mismo SQL.
-- [ ] `public.user_role` existe con exactamente `staff`, `parent`, `admin` (en ese orden).
-- [ ] `public.user_status` existe con exactamente `pending`, `active` (en ese orden).
-- [ ] `public.users` existe con `id`, `daycare_id`, `role`, `status`, `full_name`, `avatar_url`, `notify_on_post`, `daily_summary_enabled`, `created_at`, `updated_at` y los tipos del doc.
-- [ ] `id` es PK con FK a `auth.users(id)` `ON DELETE CASCADE`.
-- [ ] `daycare_id` es `not null` con FK a `public.daycares(id)`.
-- [ ] `status` default `'active'`; `notify_on_post` y `daily_summary_enabled` default `true`; `created_at`/`updated_at` default `now()`; `avatar_url` nullable.
-- [ ] `public.users` tiene RLS habilitado (`relrowsecurity = true`) y **cero** políticas en `pg_policies`.
-- [ ] Existe el índice `users_daycare_id_idx` sobre `daycare_id`.
-- [ ] Existe el trigger `users_set_updated_at` y un `UPDATE` hace avanzar `updated_at`.
-- [ ] `public.set_updated_at()` existe con `search_path` fijado en `''`.
-- [ ] Existe exactamente una fila en `auth.users` con `email = 'ysrael@google.com'` y `encrypted_password` no nulo.
-- [ ] La contraseña `123456789@` verifica contra `encrypted_password` (`extensions.crypt(...) = encrypted_password`).
-- [ ] Existe exactamente una fila en `public.users` con `id = 22222222-2222-2222-2222-222222222222`, `full_name = 'Ysrael'`, `role = 'staff'`, `status = 'active'`, `daycare_id = 11111111-1111-1111-1111-111111111111`.
-- [ ] `get_advisors(type: "security")` no reporta avisos WARN/ERROR nuevos sobre `users` (el INFO `rls_enabled_no_policy` es esperado).
-- [ ] `npm run lint` y `npx tsc --noEmit` siguen pasando.
+- [x] `list_migrations` incluye `create_user_enums_and_users` y `seed_staff_user`.
+- [x] Existen los espejos `supabase/migrations/<v1>_create_user_enums_and_users.sql` y `<v2>_seed_staff_user.sql` con versión igual a la remota y el mismo SQL.
+- [x] `public.user_role` existe con exactamente `staff`, `parent`, `admin` (en ese orden).
+- [x] `public.user_status` existe con exactamente `pending`, `active` (en ese orden).
+- [x] `public.users` existe con `id`, `daycare_id`, `role`, `status`, `full_name`, `avatar_url`, `notify_on_post`, `daily_summary_enabled`, `created_at`, `updated_at` y los tipos del doc.
+- [x] `id` es PK con FK a `auth.users(id)` `ON DELETE CASCADE`.
+- [x] `daycare_id` es `not null` con FK a `public.daycares(id)`.
+- [x] `status` default `'active'`; `notify_on_post` y `daily_summary_enabled` default `true`; `created_at`/`updated_at` default `now()`; `avatar_url` nullable.
+- [x] `public.users` tiene RLS habilitado (`relrowsecurity = true`) y **cero** políticas en `pg_policies`.
+- [x] Existe el índice `users_daycare_id_idx` sobre `daycare_id`.
+- [x] Existe el trigger `users_set_updated_at` y un `UPDATE` hace avanzar `updated_at`.
+- [x] `public.set_updated_at()` existe con `search_path` fijado en `''`.
+- [x] Existe exactamente una fila en `auth.users` con `email = 'ysrael@google.com'` y `encrypted_password` no nulo.
+- [x] La contraseña `123456789@` verifica contra `encrypted_password` (`extensions.crypt(...) = encrypted_password`).
+- [x] Existe exactamente una fila en `public.users` con `id = 22222222-2222-2222-2222-222222222222`, `full_name = 'Ysrael'`, `role = 'staff'`, `status = 'active'`, `daycare_id = 11111111-1111-1111-1111-111111111111`.
+- [x] `get_advisors(type: "security")` no reporta avisos WARN/ERROR nuevos sobre `users` (el INFO `rls_enabled_no_policy` es esperado).
+- [x] `npm run lint` y `npx tsc --noEmit` siguen pasando.
 
 ## Decisions
 
