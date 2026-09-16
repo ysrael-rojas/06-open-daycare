@@ -34,9 +34,15 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Supabase
 
 - Backend: Supabase (Postgres + Auth). La autenticación vive en `auth.users`; los datos de dominio en tablas de `public`, con `users.id` = mismo UUID que Supabase Auth.
-- Credenciales en `.env` (`SUPABASE_DB_PASSWORD`); `.env.template` es la plantilla versionada. Nunca exponer `service_role`/secret keys: en Next.js cualquier `NEXT_PUBLIC_*` llega al navegador. En cliente usar publishable keys.
+- Credenciales: `SUPABASE_DB_PASSWORD` en `.env`; `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` en `.env.local`. `.env.template` es la plantilla versionada. Nunca exponer `service_role`/secret keys: en Next.js cualquier `NEXT_PUBLIC_*` llega al navegador. En cliente usar publishable keys.
 - Esquema de referencia (tablas, enums, columnas) en `../07-DB-Schema/opendaycare-database-schema.md` (referencia `docs`). Todavía no está aplicado en la base de datos.
 - Convención de idioma: lo persistido en DB va en **inglés** (enums, tags, códigos); las etiquetas en español se traducen en la capa de UI.
+- **Clientes Supabase para Next.js:** usamos los paquetes oficiales `@supabase/supabase-js` + `@supabase/ssr` (versiones exactas fijadas en `package.json`). Toda lectura/escritura a la DB desde la app pasa por estos helpers; no crear clientes ad-hoc.
+  - `utils/supabase/client.ts` → `createClient()`: Client Components (navegador).
+  - `utils/supabase/server.ts` → `await createClient()`: Server Components, Server Actions y Route Handlers.
+  - `utils/supabase/proxy.ts` → `updateSession(request)`: refresca la sesión basada en cookies llamando `supabase.auth.getClaims()`. Lo invoca `proxy.ts` en la raíz del repo (Next 16 renombró `middleware.ts` → `proxy.ts`; no usar `middleware.ts`).
+  - Proteger páginas y datos con `supabase.auth.getClaims()`; nunca confiar en `getSession()` en el servidor.
+  - Referencias: guía SSR de Supabase para Next.js (`https://supabase.com/docs/guides/auth/server-side/nextjs.md`), template oficial `with-supabase`, skill `supabase` y Context7.
 - Antes de tocar la DB (tablas, columnas, migraciones, RLS, índices, funciones, SQL): cargar las skills `supabase` y `supabase-postgres-best-practices`. RLS obligatorio en tablas de esquemas expuestos; no usar `user_metadata` para decisiones de autorización. Verificar los cambios con una query de prueba.
 - **Migraciones obligatorias:** todo cambio en la base de datos (tablas, columnas, índices, RLS/políticas, funciones, triggers, seeds y cualquier DDL o dato persistente) se aplica **siempre** mediante una migración versionada: MCP `apply_migration` + archivo espejo en `supabase/migrations/` (ver `supabase/README.md`). `execute_sql` queda reservado para consultas de lectura y verificación, nunca para cambios persistentes.
 
