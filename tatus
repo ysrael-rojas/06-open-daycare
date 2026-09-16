@@ -1,0 +1,57 @@
+*   [1;34m85cef1e[m - [1;32m(2026-09-16)[m [37mMerge pull request #7 from ysrael-rojas/spec-07-daycares[m [2;37m- Ysrael Rojas Rojas[m[1;33m (HEAD -> main, origin/main)[m
+[31m|[m[32m\[m  
+[31m|[m * [1;34m21248fa[m - [1;32m(2026-09-16)[m [37mfeat: Update acceptance criteria for `daycares` migration to reflect completion status[m [2;37m- Ysrael Rojas[m[1;33m (origin/spec-07-daycares)[m
+[31m|[m * [1;34m31c89ff[m - [1;32m(2026-09-16)[m [37mfeat: Create `daycares` table with initial data and enable row level security[m [2;37m- Ysrael Rojas[m[1;33m[m
+[31m|[m * [1;34m84b2c55[m - [1;32m(2026-09-16)[m [37mfeat: Add migration specifications for `daycares` table and update README with migration patterns[m [2;37m- Ysrael Rojas[m[1;33m[m
+[31m|[m * [1;34mefe8456[m - [1;32m(2026-09-12)[m [37mfeat: Add best practices for Supabase and PostgreSQL schema management[m [2;37m- Ysrael Rojas[m[1;33m[m
+[31m|[m[31m/[m  
+*   [1;34mf08b876[m - [1;32m(2026-09-11)[m [37mMerge pull request #6 from ysrael-rojas/spec-06-crear-publicacion-modal[m [2;37m- Ysrael Rojas Rojas[m[1;33m[m
+[33m|[m[34m\[m  
+[33m|[m * [1;34m6acbe82[m - [1;32m(2026-09-11)[m [37mUpdate status to 'Implementado' and mark acceptance criteria as completed for NewPostModal[m [2;37m- Ysrael Rojas[m[1;33m (origin/spec-06-crear-publicacion-modal)[m
+[33m|[m * [1;34me4a448a[m - [1;32m(2026-09-11)[m [37mRefactor Sidebar to include NewPostModal component and remove publication button[m [2;37m- Ysrael Rojas[m[1;33m[m
+[33m|[m * [1;34me6472c9[m - [1;32m(2026-09-11)[m [37mAdd description and photo upload sections to NewPostModal[m [2;37m- Ysrael Rojas[m[1;33m[m
+[33m|[m * [1;34me0b102d[m - [1;32m(2026-09-11)[m [37mAdd post type selection to NewPostModal with dynamic buttons[m [2;37m- Ysrael Rojas[m[1;33m[m
+[33m|[m * [1;34mf9005a2[m - [1;32m(2026-09-11)[m [37mAdd kid selection feature to NewPostModal with toggle functionality[m [2;37m- Ysrael Rojas[m[1;33m[m
+[33m|[m * [1;34m3be227a[m - [1;32m(2026-09-11)[m [37mAdd NewPostModal component for creating new posts[m [2;37m- Ysrael Rojas[m[1;33m[m
+[33m|[m * [1;34mb1700e8[m - [1;32m(2026-09-11)[m [37mAdd specification for "Nueva publicación" modal with multi-selection for children[m [2;37m- Ysrael Rojas[m[1;33m[m
+[33m|[m[33m/[m  
+*   [1;34mc007675[m - [1;32m(2026-09-11)[m [37mMerge pull request #5 from ysrael-rojas/spec-05-vincular-padre-modal[m [2;37m- Ysrael Rojas Rojas[m[1;33m[m
+[35m|[m[36m\[m  
+[35m|[m * [1;34m30acce7[m - [1;32m(2026-09-11)[m [37mUpdate status to 'Implementado' and mark acceptance criteria as completed for LinkParentModal[m [2;37m- Ysrael Rojas[m[1;33m (origin/spec-05-vincular-padre-modal)[m
+[35m|[m * [1;34mecbf985[m - [1;32m(2026-09-11)[m [37mMake LinkParentModal draggable and add scrollable content[m [2;37m- Ysrael Rojas[m[1;33m[m
+[35m|[m * [1;34mda829b8[m - [1;32m(2026-09-11)[m [37mAdd LinkParentModal to KidProfilePage for linking additional parents[m [2;37m- Ysrael Rojas[m[1;33m[m
+[35m|[m * [1;34m181be70[m - [1;32m(2026-09-11)[m [37mRefactor LinkParentModal to manage form state and validation for parent details[m [2;37m- Ysrael Rojas[m[1;33m[m
+[35m|[m * [1;34m4f96fac[m - [1;32m(2026-09-11)[m [37mEnhance LinkParentModal with input fields for parent name and email, and add invitation code display[m [2;37m- Ysrael Rojas[m[1;33m[m
+[35m|[m * [1;34me6b31d5[m - [1;32m(2026-09-11)[m [37mAdd LinkParentModal component for linking parents to a child[m [2;37m- Ysrael Rojas[m[1;33m[m
+[35m|[m * [1;34m6bd3245[m - [1;32m(2026-09-11)[m [37mAdd Close, Info, and Send icons to the icon component[m [2;37m- Ysrael Rojas[m[1;33m[m
+[35m|[m * [1;34m8f6fcad[m - [1;32m(2026-09-11)[m [37mAdd specification for "Vincular padre" modal with detailed implementation plan and acceptance criteria[m [2;37m- Ysrael Rojas[m[1;33m[m
+[35m|[m[35m/[m  
+*   [1;34m53f72ca[m - [1;32m(2026-09-11)[m [37mMerge pull request #4 from ysrael-rojas/integracion-opencode-github[m [2;37m- Ysrael Rojas Rojas[m[1;33m[m
+[1;31m|[m[1;32m\[m  
+[1;31m|[m * [1;34mc771f39[m - [1;32m(2026-09-11)[m [37mAdd GitHub Actions workflow for opencode integration to handle issue and pull request comments[m [2;37m- Ysrael Rojas[m[1;33m (origin/integracion-opencode-github)[m
+[1;31m|[m * [1;34m7173b13[m - [1;32m(2026-09-10)[m [37mRefactor AddKidModal to improve form validation and error handling; enhance user feedback for full name and birth date fields[m [2;37m- Ysrael Rojas[m[1;33m[m
+[1;31m|[m[1;31m/[m  
+*   [1;34madccde0[m - [1;32m(2026-09-09)[m [37mMerge pull request #3 from ysrael-rojas/spec-04-agregar-nino-modal[m [2;37m- Ysrael Rojas Rojas[m[1;33m[m
+[1;33m|[m[1;34m\[m  
+[1;33m|[m * [1;34mae05382[m - [1;32m(2026-09-09)[m [37mUpdate modal status to 'Implementado' and add verification images for visual validation[m [2;37m- Ysrael Rojas[m[1;33m (origin/spec-04-agregar-nino-modal)[m
+[1;33m|[m * [1;34m6639143[m - [1;32m(2026-09-09)[m [37mRefactor KidsPage to integrate AddKidModal and remove unused PlusIcon button[m [2;37m- Ysrael Rojas[m[1;33m[m
+[1;33m|[m * [1;34m4bedbf0[m - [1;32m(2026-09-09)[m [37mRefactor AddKidModal to enhance form handling and validation; add fields for allergies and medical notes[m [2;37m- Ysrael Rojas[m[1;33m[m
+[1;33m|[m * [1;34maa0184b[m - [1;32m(2026-09-09)[m [37mAdd AddKidModal component with form fields and validation for adding a child[m [2;37m- Ysrael Rojas[m[1;33m[m
+[1;33m|[m * [1;34mc5862af[m - [1;32m(2026-09-09)[m [37mAdd ChevronDownIcon component with SVG representation[m [2;37m- Ysrael Rojas[m[1;33m[m
+[1;33m|[m * [1;34me5dad45[m - [1;32m(2026-09-09)[m [37mAdd KidRoom interface and default room configuration; update modal spec status to approved[m [2;37m- Ysrael Rojas[m[1;33m[m
+[1;33m|[m * [1;34m7710cfd[m - [1;32m(2026-09-09)[m [37mAdd modal for adding a child with validation and form fields[m [2;37m- Ysrael Rojas[m[1;33m[m
+[1;33m|[m[1;33m/[m  
+*   [1;34m84bdc5b[m - [1;32m(2026-09-09)[m [37mMerge pull request #2 from ysrael-rojas/spec-03-auth-screens[m [2;37m- Ysrael Rojas Rojas[m[1;33m[m
+[1;35m|[m[1;36m\[m  
+[1;35m|[m * [1;34mfa08078[m - [1;32m(2026-09-09)[m [37mUpdate status to 'Implementado' and mark acceptance criteria as completed for login and account activation specs[m [2;37m- Ysrael Rojas[m[1;33m (origin/spec-03-auth-screens)[m
+[1;35m|[m * [1;34m1a78d27[m - [1;32m(2026-09-09)[m [37mAdd Activate Account page with form for account activation and user details[m [2;37m- Ysrael Rojas[m[1;33m[m
+[1;35m|[m * [1;34m2df78dd[m - [1;32m(2026-09-09)[m [37mAdd Login and Account Activation pages with static forms and layout[m [2;37m- Ysrael Rojas[m[1;33m[m
+[1;35m|[m[1;35m/[m  
+*   [1;34ma01c4a5[m - [1;32m(2026-09-09)[m [37mMerge pull request #1 from ysrael-rojas/spec-02-kids-list-and-profile[m [2;37m- Ysrael Rojas Rojas[m[1;33m[m
+[31m|[m[32m\[m  
+[31m|[m * [1;34m4dc3843[m - [1;32m(2026-09-09)[m [37mUpdate acceptance criteria to reflect completed tasks for kids list and profile implementation[m [2;37m- Ysrael Rojas[m[1;33m (origin/spec-02-kids-list-and-profile)[m
+[31m|[m * [1;34m9ed4001[m - [1;32m(2026-09-09)[m [37mRefactor KidCard and Sidebar components to use Link for navigation; update status in specs to 'Implemented'[m [2;37m- Ysrael Rojas[m[1;33m[m
+[31m|[m * [1;34m65f1d00[m - [1;32m(2026-09-09)[m [37mAdd KidProfilePage component to display individual kid profiles with allergy notes and parent details[m [2;37m- Ysrael Rojas[m[1;33m[m
+[31m|[m * [1;34m7e755b2[m - [1;32m(2026-09-09)[m [37mAdd KidsPage component to display kids list with search and add functionality[m [2;37m- Ysrael Rojas[m[1;33m[m
+[31m|[m * [1;34m80f76dd[m - [1;32m(2026-09-09)[m [37mAdd KidCard component to display kid profiles with dynamic styling[m [2;37m- Ysrael Rojas[m[1;33m[m
+[31m

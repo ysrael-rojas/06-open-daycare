@@ -1,6 +1,6 @@
 # SPEC 07 — Tabla `daycares` y patrón de migraciones
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Date:** 2026-09-12
 > **Objective:** Crear la tabla `daycares` en Supabase aplicando el primer patrón de migraciones versionado (archivo en `supabase/migrations/` espejo de la migración aplicada vía MCP), con RLS habilitado y una fila semilla de la guardería de los mockups.
 
